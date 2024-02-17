@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
 	private PackageManager PACKAGE_MANAGER;
 	private static Context appContext;
 
+	private static List<HashMap<String, Object>> INDEX_LIST = new ArrayList<>();
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		try {
@@ -49,30 +52,8 @@ public class MainActivity extends AppCompatActivity {
 			TextView PHONE_NAME = findViewById(R.id.PHONE_NAME);
 			PHONE_NAME.setText(Build.BRAND.toUpperCase());
 
-			//get the spinner from the xml.
-			Spinner SELECT_INDEX_DROPMENU = (Spinner) findViewById(R.id.SELECT_INDEX_DROPMENU);
-
-			String[] items = new String[]{"ホームインデックス-1", "ホームインデックス-2", "ゲーム", "システム", "全て"};
-
-			ArrayAdapter<String> ADAPTER = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-
-			SELECT_INDEX_DROPMENU.setAdapter(ADAPTER);
-
-			SELECT_INDEX_DROPMENU.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-				@Override
-				public void onItemSelected(AdapterView<?> PARENT, View VIEW, int POS, long ID) {
-					new AlertDialog.Builder(appContext)
-							.setTitle("Ey!")
-							.setMessage("選んだもの：" + POS)
-							.setPositiveButton("おｋ", null)
-							.show();
-				}
-
-				@Override
-				public void onNothingSelected(AdapterView<?> PARENT) {
-
-				}
-			});
+			INDEX_INIT();
+			SELECT_INDEX_DROPMENU_INIT();
 
 			//パッケージマネジャーを生成
 			PACKAGE_MANAGER = this.getPackageManager();
@@ -83,58 +64,124 @@ public class MainActivity extends AppCompatActivity {
 			//リストビューを追加
 			GRID_VIEW = findViewById(R.id.APP_LIST);
 
-			//ListViewのアイテムがタップされたときの処理を設定
-			GRID_VIEW.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> PARENT, View VIEW, int POS, long ID) {
-					String SELECT_APP_PACKAGE_NAME = APP_LIST.get(POS).packageName.toString();
-
-					try {
-						//パッケージがあるか(無ければエラーになる)
-						PACKAGE_MANAGER.getPackageInfo(SELECT_APP_PACKAGE_NAME, PackageManager.GET_ACTIVITIES);
-
-
-						Intent launchIntent = getPackageManager().getLaunchIntentForPackage(SELECT_APP_PACKAGE_NAME);
-						if (launchIntent != null) {
-							startActivity(launchIntent);
-						} else {
-							new AlertDialog.Builder(appContext)
-									.setTitle("エラー")
-									.setMessage("実行可能なインテントがありません")
-									.setPositiveButton("おｋ", null)
-									.show();
-						}
-					} catch (PackageManager.NameNotFoundException e) {
-						//パッケージがない
-						new AlertDialog.Builder(appContext)
-								.setTitle("エラー")
-								.setMessage("パッケージが存在しません")
-								.setPositiveButton("おｋ", null)
-								.show();
-					} catch (Exception EX){
-						new AlertDialog.Builder(appContext)
-								.setTitle("エラー")
-								.setMessage(EX.getMessage())
-								.setPositiveButton("おｋ", null)
-								.show();
-					}
-				}
-			});
-
-			for(ApplicationInfo APP:GET_ALL_APP(this)){
-				System.out.println(PACKAGE_MANAGER.getApplicationIcon(APP.packageName));
-				APP_LIST.add(APP);
-			}
-
-			GRID_VIEW.setAdapter(new AppIconAdapter(this, APP_LIST, PACKAGE_MANAGER));
+			GRID_SELECT_EVENT();
 		} catch (Exception EX) {
 			EX.printStackTrace();
-			new AlertDialog.Builder(appContext)
-					.setTitle("エラー")
-					.setMessage(EX.getMessage())
-					.setPositiveButton("おｋ", null)
-					.show();
+			MESSAGE_BOX_SHOW("エラー", EX.getMessage());
 		}
+	}
+
+	//インデックスを初期化する
+	private void INDEX_INIT(){
+		//ホームインデックス1（テスト）
+		HashMap<String, Object> HOME_INDEX_1 = new HashMap<>();
+		HOME_INDEX_1.put("ID", "HOME1");
+		HOME_INDEX_1.put("NAME", "ホームインデックス-1");
+		HOME_INDEX_1.put("EDIT", true);
+
+		List<String> HOME_INDEX_1_CONTENTS = new ArrayList<>();
+		HOME_INDEX_1_CONTENTS.add("com.google.android.youtube");
+
+		HOME_INDEX_1.put("CONTENTS", HOME_INDEX_1_CONTENTS);
+
+		INDEX_LIST.add(HOME_INDEX_1);
+
+		//ホームインデックス2（テスト）
+		HashMap<String, Object> HOME_INDEX_2 = new HashMap<>();
+		HOME_INDEX_2.put("ID", "HOME2");
+		HOME_INDEX_2.put("NAME", "ホームインデックス-2");
+		HOME_INDEX_2.put("EDIT", true);
+
+		List<String> HOME_INDEX_2_CONTENTS = new ArrayList<>();
+		HOME_INDEX_2_CONTENTS.add("com.android.chrome");
+
+		HOME_INDEX_2.put("CONTENTS", HOME_INDEX_2_CONTENTS);
+
+		INDEX_LIST.add(HOME_INDEX_2);
+	}
+
+	//インデックスを選ぶドロップメニューを初期化
+	private void SELECT_INDEX_DROPMENU_INIT(){
+		Spinner SELECT_INDEX_DROPMENU = (Spinner) findViewById(R.id.SELECT_INDEX_DROPMENU);
+
+		List<String> ITEMS = new ArrayList<>();
+
+		for(HashMap<String, Object> ROW:INDEX_LIST){
+			ITEMS.add(ROW.get("NAME").toString());
+		}
+
+		ArrayAdapter<String> ADAPTER = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, ITEMS);
+
+		SELECT_INDEX_DROPMENU.setAdapter(ADAPTER);
+
+		SELECT_INDEX_DROPMENU.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> PARENT, View VIEW, int POS, long ID) {
+				if(INDEX_LIST.get(POS) != null){
+					LOAD_INDEX(INDEX_LIST.get(POS).get("ID").toString());
+				}else {
+					MESSAGE_BOX_SHOW("エラー", "存在しないインデックスは選択されました");
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> PARENT) {
+
+			}
+		});
+	}
+
+	//インデックスを読み込む（再読込含む）
+	private void LOAD_INDEX(String ID){
+		try{
+			for(HashMap<String, Object> ROW:INDEX_LIST){
+				//指定されたIDとインデックスのIDが一致するか(一致するまで回す)
+				if(ROW.get("ID").toString().equals(ID)){
+					//アプリ一覧をクリア
+					APP_LIST.clear();
+
+					for(String PACKAGE_NAME:(List<String>)ROW.get("CONTENTS")){
+						ApplicationInfo APP = PACKAGE_MANAGER.getApplicationInfo(PACKAGE_NAME, PackageManager.GET_META_DATA);
+						APP_LIST.add(APP);
+					}
+
+					GRID_VIEW.setAdapter(new AppIconAdapter(this, APP_LIST, PACKAGE_MANAGER));
+				}
+			}
+		} catch (PackageManager.NameNotFoundException e) {
+			//パッケージがない
+			MESSAGE_BOX_SHOW("エラー", "パッケージが存在しません");
+		} catch (Exception EX){
+			EX.printStackTrace();
+			MESSAGE_BOX_SHOW("エラー", EX.getMessage());
+		}
+	}
+
+	//アプリ一覧のアイコンがタップされたときの処理を設定
+	private void GRID_SELECT_EVENT(){
+		GRID_VIEW.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> PARENT, View VIEW, int POS, long ID) {
+				String SELECT_APP_PACKAGE_NAME = APP_LIST.get(POS).packageName.toString();
+
+				try {
+					//パッケージがあるか(無ければエラーになる)
+					PACKAGE_MANAGER.getPackageInfo(SELECT_APP_PACKAGE_NAME, PackageManager.GET_ACTIVITIES);
+
+					Intent launchIntent = getPackageManager().getLaunchIntentForPackage(SELECT_APP_PACKAGE_NAME);
+					if (launchIntent != null) {
+						startActivity(launchIntent);
+					} else {
+						MESSAGE_BOX_SHOW("エラー", "実行可能なインテントがありません");
+					}
+				} catch (PackageManager.NameNotFoundException e) {
+					//パッケージがない
+					MESSAGE_BOX_SHOW("エラー", "パッケージが存在しません");
+				} catch (Exception EX){
+					MESSAGE_BOX_SHOW("エラー", EX.getMessage());
+				}
+			}
+		});
 	}
 
 
@@ -145,5 +192,13 @@ public class MainActivity extends AppCompatActivity {
 		List<ApplicationInfo> apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 
 		return apps;
+	}
+
+	public void MESSAGE_BOX_SHOW(String TITLE, String TEXT){
+		new AlertDialog.Builder(appContext)
+				.setTitle(TITLE)
+				.setMessage(TEXT)
+				.setPositiveButton("おｋ", null)
+				.show();
 	}
 }
