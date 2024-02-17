@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,6 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 	private GridView GRID_VIEW;
-	private ArrayList<String> ITEM_LIST;
 	private ArrayList<ApplicationInfo> APP_LIST;
 	private PackageManager PACKAGE_MANAGER;
 	private static Context appContext;
@@ -42,11 +42,37 @@ public class MainActivity extends AppCompatActivity {
 
 			setContentView(R.layout.activity_main);
 
+			//コンテキストに自分を入れる
 			appContext = this;
 
 			//スマホの名前をセットするやつ
 			TextView PHONE_NAME = findViewById(R.id.PHONE_NAME);
 			PHONE_NAME.setText(Build.BRAND.toUpperCase());
+
+			//get the spinner from the xml.
+			Spinner SELECT_INDEX_DROPMENU = (Spinner) findViewById(R.id.SELECT_INDEX_DROPMENU);
+
+			String[] items = new String[]{"ホームインデックス-1", "ホームインデックス-2", "ゲーム", "システム", "全て"};
+
+			ArrayAdapter<String> ADAPTER = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+
+			SELECT_INDEX_DROPMENU.setAdapter(ADAPTER);
+
+			SELECT_INDEX_DROPMENU.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+				@Override
+				public void onItemSelected(AdapterView<?> PARENT, View VIEW, int POS, long ID) {
+					new AlertDialog.Builder(appContext)
+							.setTitle("Ey!")
+							.setMessage("選んだもの：" + POS)
+							.setPositiveButton("おｋ", null)
+							.show();
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> PARENT) {
+
+				}
+			});
 
 			//パッケージマネジャーを生成
 			PACKAGE_MANAGER = this.getPackageManager();
@@ -56,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
 			//リストビューを追加
 			GRID_VIEW = findViewById(R.id.APP_LIST);
-			ITEM_LIST = new ArrayList<>();
 
 			//ListViewのアイテムがタップされたときの処理を設定
 			GRID_VIEW.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -104,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
 			GRID_VIEW.setAdapter(new AppIconAdapter(this, APP_LIST, PACKAGE_MANAGER));
 		} catch (Exception EX) {
 			EX.printStackTrace();
+			new AlertDialog.Builder(appContext)
+					.setTitle("エラー")
+					.setMessage(EX.getMessage())
+					.setPositiveButton("おｋ", null)
+					.show();
 		}
 	}
 

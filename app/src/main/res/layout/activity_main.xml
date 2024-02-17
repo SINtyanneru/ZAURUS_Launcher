@@ -25,6 +25,13 @@
 			android:layout_weight="1"
 			android:background="@color/MAIN_COLOR">
 
+			<Spinner
+				android:id="@+id/SELECT_INDEX_DROPMENU"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@android:drawable/btn_dropdown"
+				android:spinnerMode="dropdown"/>
+
 			<TextView
 				android:id="@+id/PHONE_NAME"
 				android:layout_width="fill_parent"
