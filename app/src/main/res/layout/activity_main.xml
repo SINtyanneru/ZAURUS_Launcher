@@ -46,15 +46,40 @@
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
 			android:layout_weight="9">
-			<GridView
-				android:id="@+id/APP_LIST"
+			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:gravity="center"
-				android:horizontalSpacing="10dp"
-				android:numColumns="3"
-				android:stretchMode="columnWidth"
-				android:verticalSpacing="10dp" />
+				android:layout_marginStart="1dp"
+				android:layout_marginEnd="1dp"
+				android:layout_marginBottom="1dp"
+				android:orientation="vertical">
+				<!--編集ボタン-->
+				<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="1">
+					<Button
+						android:id="@+id/EDIT_BUTTON"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="編集" />
+				</FrameLayout>
+				<!--インデックス本体-->
+				<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="9">
+					<GridView
+						android:id="@+id/APP_LIST"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:gravity="center"
+						android:horizontalSpacing="10dp"
+						android:numColumns="3"
+						android:stretchMode="columnWidth"
+						android:verticalSpacing="10dp" />
+				</FrameLayout>
+			</LinearLayout>
 		</FrameLayout>
 
 		<!--フッター-->

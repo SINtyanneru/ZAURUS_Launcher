@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginStart="1dp"
+		android:layout_marginEnd="1dp"
+		android:layout_marginBottom="1dp"
+		android:orientation="vertical"
+		android:background="@color/INDEX_EDIT_COLOR">
+		<!--操作-->
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@color/TEXT_BACKGROUND_COLOR"
+				android:textColor="@color/white"
+				android:textSize="20dp"
+				android:text="ｲﾝﾃﾞｯｸｽ項目の編集" />
+			<FrameLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="right">
+				<Button
+					android:id="@+id/APPLAY_BUTTON"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="設定" />
+			</FrameLayout>
+		</FrameLayout>
+		<!--インデックス内のアプリ一覧-->
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="3">
+			<GridView
+				android:id="@+id/INDEX_APP_LIST"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:horizontalSpacing="10dp"
+				android:numColumns="3"
+				android:stretchMode="columnWidth"
+				android:verticalSpacing="10dp"
+				android:background="@color/white" />
+		</FrameLayout>
+		<!--追加とかするボタン-->
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1">
+			<Button
+				android:id="@+id/ADD_BUTTON"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="追加" />
+		</FrameLayout>
+		<!--端末内の全アプリ-->
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="3">
+			<GridView
+				android:id="@+id/ALL_APP_LIST"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:horizontalSpacing="10dp"
+				android:numColumns="3"
+				android:stretchMode="columnWidth"
+				android:verticalSpacing="10dp"
+				android:background="@color/white" />
+		</FrameLayout>
+		<!--マージンを撮る-->
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="0.5">
+
+		</FrameLayout>
+	</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

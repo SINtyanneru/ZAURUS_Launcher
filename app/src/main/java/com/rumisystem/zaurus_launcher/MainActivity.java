@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 		try {
 			super.onCreate(savedInstanceState);
 
+			//タクスバーを削除
 			getSupportActionBar().hide();
 
 			setContentView(R.layout.activity_main);
@@ -65,6 +67,19 @@ public class MainActivity extends AppCompatActivity {
 			GRID_VIEW = findViewById(R.id.APP_LIST);
 
 			GRID_SELECT_EVENT();
+
+			Button EDIT_BUTTON = findViewById(R.id.EDIT_BUTTON);
+			EDIT_BUTTON.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View V) {
+					try{
+						Intent INTENT = new Intent(MainActivity.this, INDEX_EDIT_Activity.class);
+						startActivity(INTENT);
+					}catch (Exception EX){
+						MESSAGE_BOX_SHOW("エラー", EX.getMessage());
+					}
+				}
+			});
 		} catch (Exception EX) {
 			EX.printStackTrace();
 			MESSAGE_BOX_SHOW("エラー", EX.getMessage());
@@ -169,7 +184,9 @@ public class MainActivity extends AppCompatActivity {
 					PACKAGE_MANAGER.getPackageInfo(SELECT_APP_PACKAGE_NAME, PackageManager.GET_ACTIVITIES);
 
 					Intent launchIntent = getPackageManager().getLaunchIntentForPackage(SELECT_APP_PACKAGE_NAME);
+					//実行可能なインテントがあるか
 					if (launchIntent != null) {
+						//あるので実行する
 						startActivity(launchIntent);
 					} else {
 						MESSAGE_BOX_SHOW("エラー", "実行可能なインテントがありません");
@@ -182,16 +199,6 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		});
-	}
-
-
-	public static List<ApplicationInfo> GET_ALL_APP(Context context) {
-		PackageManager packageManager = context.getPackageManager();
-
-		// PackageManagerからインストールされたすべてのアプリケーション情報を取得
-		List<ApplicationInfo> apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
-
-		return apps;
 	}
 
 	public void MESSAGE_BOX_SHOW(String TITLE, String TEXT){
