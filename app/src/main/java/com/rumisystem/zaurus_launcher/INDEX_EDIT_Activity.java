@@ -1,6 +1,7 @@
 package com.rumisystem.zaurus_launcher;
 
 import static com.rumisystem.zaurus_launcher.INDEX_DATA.INDEX_LIST;
+import static com.rumisystem.zaurus_launcher.INDEX_DATA.SAVE_INDEX_FILE;
 import static com.rumisystem.zaurus_launcher.LIB.GET_ALL_APP;
 import static com.rumisystem.zaurus_launcher.LIB.LOAD_INDEX;
 import static com.rumisystem.zaurus_launcher.LIB.MESSAGE_BOX_SHOW;
@@ -94,6 +95,8 @@ public class INDEX_EDIT_Activity extends AppCompatActivity {
 
 					Intent INTENT = new Intent(INDEX_EDIT_Activity.this, MainActivity.class);
 					startActivity(INTENT);
+
+					SAVE_INDEX_FILE();
 				}
 			});
 

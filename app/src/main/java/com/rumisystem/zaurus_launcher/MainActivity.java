@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 	private GridView GRID_VIEW;
 	private ArrayList<ApplicationInfo> APP_LIST;
 	private PackageManager PACKAGE_MANAGER;
-	private static Context appContext;
+	public static Context appContext;
 
 
 	@Override
