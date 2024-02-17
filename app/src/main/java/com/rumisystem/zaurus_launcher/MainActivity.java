@@ -1,5 +1,8 @@
 package com.rumisystem.zaurus_launcher;
 
+import static com.rumisystem.zaurus_launcher.INDEX_DATA.INDEX_INIT;
+import static com.rumisystem.zaurus_launcher.INDEX_DATA.INDEX_LIST;
+import static com.rumisystem.zaurus_launcher.LIB.LOAD_INDEX;
 import static com.rumisystem.zaurus_launcher.LIB.MESSAGE_BOX_SHOW;
 
 import android.content.Context;
@@ -35,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
 	private ArrayList<ApplicationInfo> APP_LIST;
 	private PackageManager PACKAGE_MANAGER;
 	private static Context appContext;
-
-	private static List<HashMap<String, Object>> INDEX_LIST = new ArrayList<>();
 
 
 	@Override
@@ -88,34 +89,6 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	//インデックスを初期化する
-	private void INDEX_INIT(){
-		//ホームインデックス1（テスト）
-		HashMap<String, Object> HOME_INDEX_1 = new HashMap<>();
-		HOME_INDEX_1.put("ID", "HOME1");
-		HOME_INDEX_1.put("NAME", "ホームインデックス-1");
-		HOME_INDEX_1.put("EDIT", true);
-
-		List<String> HOME_INDEX_1_CONTENTS = new ArrayList<>();
-		HOME_INDEX_1_CONTENTS.add("com.google.android.youtube");
-
-		HOME_INDEX_1.put("CONTENTS", HOME_INDEX_1_CONTENTS);
-
-		INDEX_LIST.add(HOME_INDEX_1);
-
-		//ホームインデックス2（テスト）
-		HashMap<String, Object> HOME_INDEX_2 = new HashMap<>();
-		HOME_INDEX_2.put("ID", "HOME2");
-		HOME_INDEX_2.put("NAME", "ホームインデックス-2");
-		HOME_INDEX_2.put("EDIT", true);
-
-		List<String> HOME_INDEX_2_CONTENTS = new ArrayList<>();
-		HOME_INDEX_2_CONTENTS.add("com.android.chrome");
-
-		HOME_INDEX_2.put("CONTENTS", HOME_INDEX_2_CONTENTS);
-
-		INDEX_LIST.add(HOME_INDEX_2);
-	}
 
 	//インデックスを選ぶドロップメニューを初期化
 	private void SELECT_INDEX_DROPMENU_INIT(){
@@ -135,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onItemSelected(AdapterView<?> PARENT, View VIEW, int POS, long ID) {
 				if(INDEX_LIST.get(POS) != null){
-					LOAD_INDEX(INDEX_LIST.get(POS).get("ID").toString());
+					LOAD_INDEX(appContext, APP_LIST, PACKAGE_MANAGER, GRID_VIEW, INDEX_LIST.get(POS).get("ID").toString());
 				} else {
 					MESSAGE_BOX_SHOW(appContext, "エラー", "存在しないインデックスは選択されました");
 				}
@@ -146,32 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
 			}
 		});
-	}
-
-	//インデックスを読み込む（再読込含む）
-	private void LOAD_INDEX(String ID){
-		try{
-			for(HashMap<String, Object> ROW:INDEX_LIST){
-				//指定されたIDとインデックスのIDが一致するか(一致するまで回す)
-				if(ROW.get("ID").toString().equals(ID)){
-					//アプリ一覧をクリア
-					APP_LIST.clear();
-
-					for(String PACKAGE_NAME:(List<String>)ROW.get("CONTENTS")){
-						ApplicationInfo APP = PACKAGE_MANAGER.getApplicationInfo(PACKAGE_NAME, PackageManager.GET_META_DATA);
-						APP_LIST.add(APP);
-					}
-
-					GRID_VIEW.setAdapter(new AppIconAdapter(this, APP_LIST, PACKAGE_MANAGER));
-				}
-			}
-		} catch (PackageManager.NameNotFoundException e) {
-			//パッケージがない
-			MESSAGE_BOX_SHOW(appContext, "エラー", "パッケージが存在しません");
-		} catch (Exception EX){
-			EX.printStackTrace();
-			MESSAGE_BOX_SHOW(appContext, "エラー", EX.getMessage());
-		}
 	}
 
 	//アプリ一覧のアイコンがタップされたときの処理を設定

@@ -1,11 +1,16 @@
 package com.rumisystem.zaurus_launcher;
 
+import static com.rumisystem.zaurus_launcher.INDEX_DATA.INDEX_LIST;
+
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.widget.GridView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class LIB {
@@ -24,5 +29,31 @@ public class LIB {
 		List<ApplicationInfo> apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 
 		return apps;
+	}
+
+	//インデックスを読み込む（再読込含む）
+	public static void LOAD_INDEX(Context appContext, ArrayList<ApplicationInfo> APP_LIST, PackageManager PACKAGE_MANAGER, GridView GRID_VIEW, String ID){
+		try{
+			for(HashMap<String, Object> ROW:INDEX_LIST){
+				//指定されたIDとインデックスのIDが一致するか(一致するまで回す)
+				if(ROW.get("ID").toString().equals(ID)){
+					//アプリ一覧をクリア
+					APP_LIST.clear();
+
+					for(String PACKAGE_NAME:(List<String>)ROW.get("CONTENTS")){
+						ApplicationInfo APP = PACKAGE_MANAGER.getApplicationInfo(PACKAGE_NAME, PackageManager.GET_META_DATA);
+						APP_LIST.add(APP);
+					}
+
+					GRID_VIEW.setAdapter(new AppIconAdapter(appContext, APP_LIST, PACKAGE_MANAGER));
+				}
+			}
+		} catch (PackageManager.NameNotFoundException e) {
+			//パッケージがない
+			MESSAGE_BOX_SHOW(appContext, "エラー", "パッケージが存在しません");
+		} catch (Exception EX){
+			EX.printStackTrace();
+			MESSAGE_BOX_SHOW(appContext, "エラー", EX.getMessage());
+		}
 	}
 }

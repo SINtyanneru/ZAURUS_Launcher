@@ -1,6 +1,8 @@
 package com.rumisystem.zaurus_launcher;
 
+import static com.rumisystem.zaurus_launcher.INDEX_DATA.INDEX_LIST;
 import static com.rumisystem.zaurus_launcher.LIB.GET_ALL_APP;
+import static com.rumisystem.zaurus_launcher.LIB.LOAD_INDEX;
 import static com.rumisystem.zaurus_launcher.LIB.MESSAGE_BOX_SHOW;
 
 import android.content.Context;
@@ -10,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -20,9 +23,11 @@ import java.util.List;
 
 public class INDEX_EDIT_Activity extends AppCompatActivity {
 	private ApplicationInfo SELECT_APP;
-	private GridView GRID_VIEW;
 	private PackageManager PACKAGE_MANAGER;
-	private List<ApplicationInfo> APP_LIST;
+	private GridView ALL_APP_LIST_GRIDVIEW;
+	private List<ApplicationInfo> ALL_APP_LIST_LIST;
+	private GridView INDEX_APP_LIST_GRIDVIEW;
+	private List<ApplicationInfo> INDEX_APP_LIST_LIST;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +43,18 @@ public class INDEX_EDIT_Activity extends AppCompatActivity {
 			PACKAGE_MANAGER = this.getPackageManager();
 
 			//アプリ一覧を入れる配列を初期化
-			APP_LIST = new ArrayList<>();
+			ALL_APP_LIST_LIST = new ArrayList<>();
+			INDEX_APP_LIST_LIST = new ArrayList<>();
 
 			//リストビューを追加
-			GRID_VIEW = findViewById(R.id.ALL_APP_LIST);
+			ALL_APP_LIST_GRIDVIEW = findViewById(R.id.ALL_APP_LIST);
+			INDEX_APP_LIST_GRIDVIEW = findViewById(R.id.INDEX_APP_LIST);
 
-			//ListViewのアイテムがタップされたときの処理を設定
-			GRID_VIEW.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			//全アプリ一覧のアイテムがタップされたときの処理を設定
+			ALL_APP_LIST_GRIDVIEW.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> PARENT, View VIEW, int POS, long ID) {
-					ApplicationInfo SELECT_APP_PACKAGE = APP_LIST.get(POS);
+					ApplicationInfo SELECT_APP_PACKAGE = ALL_APP_LIST_LIST.get(POS);
 
 					//選択する
 					SELECT_APP = SELECT_APP_PACKAGE;
@@ -57,8 +64,42 @@ public class INDEX_EDIT_Activity extends AppCompatActivity {
 				}
 			});
 
+			//追加ボタン
+			Button ADD_BUTTON = findViewById(R.id.ADD_BUTTON);
+			ADD_BUTTON.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if(SELECT_APP != null){
+						List<String> OLD_CONTENTS = (List<String>)INDEX_DATA.INDEX_LIST.get(0).get("CONTENTS");
+
+						OLD_CONTENTS.add(SELECT_APP.packageName);
+
+						//リストを更新する
+						INDEX_DATA.INDEX_LIST.get(0).put("CONTENTS", OLD_CONTENTS);
+
+						//リストを更新
+						SET_INDEX_APP();
+					} else {
+						Toast.makeText(INDEX_EDIT_Activity.this,  "いや何かを選べよ", Toast.LENGTH_SHORT).show();
+					}
+				}
+			});
+
+			//適応ボタン
+			Button APPLAY_BUTTON = findViewById(R.id.APPLAY_BUTTON);
+			APPLAY_BUTTON.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					finish();
+
+					Intent INTENT = new Intent(INDEX_EDIT_Activity.this, MainActivity.class);
+					startActivity(INTENT);
+				}
+			});
+
 			//全てのアプリを一覧にセット
 			SET_ALL_APP();
+			SET_INDEX_APP();
 		} catch (Exception EX) {
 			EX.printStackTrace();
 			MESSAGE_BOX_SHOW(this, "エラー", EX.getMessage());
@@ -72,10 +113,18 @@ public class INDEX_EDIT_Activity extends AppCompatActivity {
 
 			//実行可能なインテントがあるか、無いということはランチャーから実行できないので除外する
 			if (launchIntent != null) {
-				APP_LIST.add(APP);
+				ALL_APP_LIST_LIST.add(APP);
 			}
 		}
 
-		GRID_VIEW.setAdapter(new AppIconAdapter(this, APP_LIST, PACKAGE_MANAGER));
+		ALL_APP_LIST_GRIDVIEW.setAdapter(new AppIconAdapter(this, ALL_APP_LIST_LIST, PACKAGE_MANAGER));
+	}
+
+	//インデックス内のアプリ一覧をセットする
+	private void SET_INDEX_APP(){
+		//再読込
+		LOAD_INDEX(INDEX_EDIT_Activity.this, (ArrayList<ApplicationInfo>) INDEX_APP_LIST_LIST, PACKAGE_MANAGER, INDEX_APP_LIST_GRIDVIEW, INDEX_LIST.get(0).get("ID").toString());
+
+		INDEX_APP_LIST_GRIDVIEW.setAdapter(new AppIconAdapter(this, INDEX_APP_LIST_LIST, PACKAGE_MANAGER));
 	}
 }
