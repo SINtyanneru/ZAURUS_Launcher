@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.system.Os;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,8 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -27,12 +31,22 @@ public class MainActivity extends AppCompatActivity {
 	private ArrayList<String> ITEM_LIST;
 	private ArrayList<ApplicationInfo> APP_LIST;
 	private PackageManager PACKAGE_MANAGER;
+	private static Context appContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		try {
 			super.onCreate(savedInstanceState);
+
+			getSupportActionBar().hide();
+
 			setContentView(R.layout.activity_main);
+
+			appContext = this;
+
+			//スマホの名前をセットするやつ
+			TextView PHONE_NAME = findViewById(R.id.PHONE_NAME);
+			PHONE_NAME.setText(Build.BRAND.toUpperCase());
 
 			//パッケージマネジャーを生成
 			PACKAGE_MANAGER = this.getPackageManager();
@@ -54,19 +68,36 @@ public class MainActivity extends AppCompatActivity {
 						//パッケージがあるか(無ければエラーになる)
 						PACKAGE_MANAGER.getPackageInfo(SELECT_APP_PACKAGE_NAME, PackageManager.GET_ACTIVITIES);
 
+
 						Intent launchIntent = getPackageManager().getLaunchIntentForPackage(SELECT_APP_PACKAGE_NAME);
 						if (launchIntent != null) {
 							startActivity(launchIntent);
+						} else {
+							new AlertDialog.Builder(appContext)
+									.setTitle("エラー")
+									.setMessage("実行可能なインテントがありません")
+									.setPositiveButton("おｋ", null)
+									.show();
 						}
 					} catch (PackageManager.NameNotFoundException e) {
 						//パッケージがない
+						new AlertDialog.Builder(appContext)
+								.setTitle("エラー")
+								.setMessage("パッケージが存在しません")
+								.setPositiveButton("おｋ", null)
+								.show();
+					} catch (Exception EX){
+						new AlertDialog.Builder(appContext)
+								.setTitle("エラー")
+								.setMessage(EX.getMessage())
+								.setPositiveButton("おｋ", null)
+								.show();
 					}
 				}
 			});
 
 			for(ApplicationInfo APP:GET_ALL_APP(this)){
 				System.out.println(PACKAGE_MANAGER.getApplicationIcon(APP.packageName));
-
 				APP_LIST.add(APP);
 			}
 
