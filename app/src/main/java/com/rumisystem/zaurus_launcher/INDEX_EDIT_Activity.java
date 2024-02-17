@@ -80,6 +80,10 @@ public class INDEX_EDIT_Activity extends AppCompatActivity {
 
 						//リストを更新
 						SET_INDEX_APP();
+						RELOAD_ALL_APP();
+
+						//選択を解除
+						SELECT_APP = null;
 					} else {
 						Toast.makeText(INDEX_EDIT_Activity.this,  "いや何かを選べよ", Toast.LENGTH_SHORT).show();
 					}
@@ -116,12 +120,56 @@ public class INDEX_EDIT_Activity extends AppCompatActivity {
 
 			//実行可能なインテントがあるか、無いということはランチャーから実行できないので除外する
 			if (launchIntent != null) {
+				boolean NOT_DUB = false; //アプリがダブってるかどうかを登録する変数
+
+				//インデックスの内容を全て確認して、アプリがダブってないかをチェック
+				for(String PACKAGE_NAME:(List<String>)INDEX_LIST.get(0).get("CONTENTS")){
+					if(APP.packageName.equals(PACKAGE_NAME)){
+						//ダブってる
+						NOT_DUB = true;
+						break;
+					}
+				}
+
+				//ダブって無ければ追加
+				if(!NOT_DUB){
+					ALL_APP_LIST_LIST.add(APP);
+				}
+			}
+		}
+
+		ALL_APP_LIST_GRIDVIEW.setAdapter(new AppIconAdapter(this, ALL_APP_LIST_LIST, PACKAGE_MANAGER));
+	}
+
+	//端末内の全アプリ一覧を再読込する関数
+	private void RELOAD_ALL_APP(){
+		//古いリストを変数に避難
+		List<ApplicationInfo> ALL_APP_LIST_LIST_OLD = new ArrayList<>(ALL_APP_LIST_LIST);
+
+		//リストを初期化
+		ALL_APP_LIST_LIST.clear();
+
+		for(ApplicationInfo APP:ALL_APP_LIST_LIST_OLD){
+			boolean NOT_DUB = false; //アプリがダブってるかどうかを登録する変数
+
+			//インデックスの内容を全て確認して、アプリがダブってないかをチェック
+			for(String PACKAGE_NAME:(List<String>)INDEX_LIST.get(0).get("CONTENTS")){
+				if(APP.packageName.equals(PACKAGE_NAME)){
+					//ダブってる
+					NOT_DUB = true;
+					break;
+				}
+			}
+
+			//ダブって無ければ追加
+			if(!NOT_DUB){
 				ALL_APP_LIST_LIST.add(APP);
 			}
 		}
 
 		ALL_APP_LIST_GRIDVIEW.setAdapter(new AppIconAdapter(this, ALL_APP_LIST_LIST, PACKAGE_MANAGER));
 	}
+
 
 	//インデックス内のアプリ一覧をセットする
 	private void SET_INDEX_APP(){
