@@ -65,6 +65,7 @@ public class INDEX_EDIT_Activity extends AppCompatActivity {
 		}
 	}
 
+	//端末内の全アプリを一覧にセットする関数
 	private void SET_ALL_APP(){
 		for(ApplicationInfo APP:GET_ALL_APP(this)){
 			Intent launchIntent = getPackageManager().getLaunchIntentForPackage(APP.packageName);
