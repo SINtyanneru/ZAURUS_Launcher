@@ -1,5 +1,7 @@
 package com.rumisystem.zaurus_launcher;
 
+import static com.rumisystem.zaurus_launcher.LIB.MESSAGE_BOX_SHOW;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -75,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
 					try{
 						Intent INTENT = new Intent(MainActivity.this, INDEX_EDIT_Activity.class);
 						startActivity(INTENT);
-					}catch (Exception EX){
-						MESSAGE_BOX_SHOW("エラー", EX.getMessage());
+					} catch (Exception EX){
+						MESSAGE_BOX_SHOW(appContext, "エラー", EX.getMessage());
 					}
 				}
 			});
 		} catch (Exception EX) {
 			EX.printStackTrace();
-			MESSAGE_BOX_SHOW("エラー", EX.getMessage());
+			MESSAGE_BOX_SHOW(appContext, "エラー", EX.getMessage());
 		}
 	}
 
@@ -134,8 +136,8 @@ public class MainActivity extends AppCompatActivity {
 			public void onItemSelected(AdapterView<?> PARENT, View VIEW, int POS, long ID) {
 				if(INDEX_LIST.get(POS) != null){
 					LOAD_INDEX(INDEX_LIST.get(POS).get("ID").toString());
-				}else {
-					MESSAGE_BOX_SHOW("エラー", "存在しないインデックスは選択されました");
+				} else {
+					MESSAGE_BOX_SHOW(appContext, "エラー", "存在しないインデックスは選択されました");
 				}
 			}
 
@@ -165,10 +167,10 @@ public class MainActivity extends AppCompatActivity {
 			}
 		} catch (PackageManager.NameNotFoundException e) {
 			//パッケージがない
-			MESSAGE_BOX_SHOW("エラー", "パッケージが存在しません");
+			MESSAGE_BOX_SHOW(appContext, "エラー", "パッケージが存在しません");
 		} catch (Exception EX){
 			EX.printStackTrace();
-			MESSAGE_BOX_SHOW("エラー", EX.getMessage());
+			MESSAGE_BOX_SHOW(appContext, "エラー", EX.getMessage());
 		}
 	}
 
@@ -189,23 +191,15 @@ public class MainActivity extends AppCompatActivity {
 						//あるので実行する
 						startActivity(launchIntent);
 					} else {
-						MESSAGE_BOX_SHOW("エラー", "実行可能なインテントがありません");
+						MESSAGE_BOX_SHOW(appContext, "エラー", "実行可能なインテントがありません");
 					}
 				} catch (PackageManager.NameNotFoundException e) {
 					//パッケージがない
-					MESSAGE_BOX_SHOW("エラー", "パッケージが存在しません");
+					MESSAGE_BOX_SHOW(appContext, "エラー", "パッケージが存在しません");
 				} catch (Exception EX){
-					MESSAGE_BOX_SHOW("エラー", EX.getMessage());
+					MESSAGE_BOX_SHOW(appContext, "エラー", EX.getMessage());
 				}
 			}
 		});
-	}
-
-	public void MESSAGE_BOX_SHOW(String TITLE, String TEXT){
-		new AlertDialog.Builder(appContext)
-				.setTitle(TITLE)
-				.setMessage(TEXT)
-				.setPositiveButton("おｋ", null)
-				.show();
 	}
 }
