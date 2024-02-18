@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 			public void onItemSelected(AdapterView<?> PARENT, View VIEW, int POS, long ID) {
 				if(INDEX_LIST.get(POS) != null){
 					LOAD_INDEX(appContext, APP_LIST, PACKAGE_MANAGER, GRID_VIEW, INDEX_LIST.get(POS).get("ID").toString());
+					INDEX_EDIT_Activity.INDEX_ID = POS;
 				} else {
 					MESSAGE_BOX_SHOW(appContext, "エラー", "存在しないインデックスは選択されました");
 				}

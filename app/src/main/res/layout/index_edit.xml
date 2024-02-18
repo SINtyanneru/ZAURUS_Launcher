@@ -55,11 +55,23 @@
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
 			android:layout_weight="1">
-			<Button
-				android:id="@+id/ADD_BUTTON"
-				android:layout_width="wrap_content"
+			<LinearLayout
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:text="追加" />
+				android:orientation="horizontal">
+				<Button
+					android:id="@+id/ADD_BUTTON"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="インデックスに追加" />
+				<Button
+					android:id="@+id/RM_BUTTON"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="インデックスから削除" />
+			</LinearLayout>
 		</FrameLayout>
 		<!--端末内の全アプリ-->
 		<FrameLayout
