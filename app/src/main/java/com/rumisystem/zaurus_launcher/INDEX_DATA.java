@@ -44,15 +44,7 @@ public class INDEX_DATA {
 				//無いので初期ファイルを作る
 				if(INDEX_FILE.createNewFile()){
 					//初期ファイルの内容
-					//ホームインデックス1（テスト）
-					HashMap<String, Object> HOME_INDEX_1 = new HashMap<>();
-					HOME_INDEX_1.put("ID", "HOME1");
-					HOME_INDEX_1.put("NAME", "ホームインデックス-1");
-					HOME_INDEX_1.put("EDIT", true);
-					List<String> HOME_INDEX_1_CONTENTS = new ArrayList<>();
-					HOME_INDEX_1_CONTENTS.add("com.google.android.youtube");
-					HOME_INDEX_1.put("CONTENTS", HOME_INDEX_1_CONTENTS);
-					INDEX_LIST.add(HOME_INDEX_1);
+					GEN_INDEX_DATA();
 
 					//書き込む
 					BufferedWriter WRITER = new BufferedWriter(new FileWriter(INDEX_FILE));
@@ -134,5 +126,36 @@ public class INDEX_DATA {
 		} catch (Exception EX){
 			MESSAGE_BOX_SHOW(appContext, "エラー", EX.getMessage());
 		}
+	}
+
+	//初期のインデックスファイルの内容を作る関数
+	private static void GEN_INDEX_DATA(){
+		HashMap<String, Object> HOME_INDEX_1 = new HashMap<>();
+		HOME_INDEX_1.put("ID", "HOME1");
+		HOME_INDEX_1.put("NAME", "ホームインデックス-1");
+		HOME_INDEX_1.put("EDIT", true);
+		HOME_INDEX_1.put("CONTENTS", new ArrayList<>());
+		INDEX_LIST.add(HOME_INDEX_1);
+
+		HashMap<String, Object> HOME_INDEX_2 = new HashMap<>();
+		HOME_INDEX_2.put("ID", "HOME2");
+		HOME_INDEX_2.put("NAME", "ホームインデックス-2");
+		HOME_INDEX_2.put("EDIT", true);
+		HOME_INDEX_2.put("CONTENTS", new ArrayList<>());
+		INDEX_LIST.add(HOME_INDEX_2);
+
+		HashMap<String, Object> GAME_INDEX = new HashMap<>();
+		GAME_INDEX.put("ID", "GAME");
+		GAME_INDEX.put("NAME", "ゲーム");
+		GAME_INDEX.put("EDIT", true);
+		GAME_INDEX.put("CONTENTS", new ArrayList<>());
+		INDEX_LIST.add(GAME_INDEX);
+
+		HashMap<String, Object> SNS_INDEX = new HashMap<>();
+		SNS_INDEX.put("ID", "SNS");
+		SNS_INDEX.put("NAME", "ソーシャル");
+		SNS_INDEX.put("EDIT", true);
+		SNS_INDEX.put("CONTENTS", new ArrayList<>());
+		INDEX_LIST.add(SNS_INDEX);
 	}
 }
