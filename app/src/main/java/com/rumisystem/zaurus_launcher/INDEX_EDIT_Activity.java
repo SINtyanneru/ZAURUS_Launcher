@@ -15,9 +15,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +57,10 @@ public class INDEX_EDIT_Activity extends AppCompatActivity {
 			//リストビューを追加
 			ALL_APP_LIST_GRIDVIEW = findViewById(R.id.ALL_APP_LIST);
 			INDEX_APP_LIST_GRIDVIEW = findViewById(R.id.INDEX_APP_LIST);
+
+			//インデックス名を入れる
+			TextView INDEX_NAME = findViewById(R.id.INDEX_NAME);
+			INDEX_NAME.setText(INDEX_DATA.INDEX_LIST.get(INDEX_ID).get("NAME").toString());
 
 			//全アプリ一覧のアイテムがタップされたときの処理を設定
 			ALL_APP_LIST_GRIDVIEW.setOnItemClickListener(new AdapterView.OnItemClickListener() {
