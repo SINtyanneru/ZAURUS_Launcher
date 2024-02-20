@@ -157,5 +157,16 @@ public class INDEX_DATA {
 		SNS_INDEX.put("EDIT", true);
 		SNS_INDEX.put("CONTENTS", new ArrayList<>());
 		INDEX_LIST.add(SNS_INDEX);
+
+		HashMap<String, Object> SYSTEM_INDEX = new HashMap<>();
+		SYSTEM_INDEX.put("ID", "SYSTEM");
+		SYSTEM_INDEX.put("NAME", "システム");
+		SYSTEM_INDEX.put("EDIT", true);
+
+		List<String> SYSTEM_CONTENTS = new ArrayList<>();
+		SYSTEM_CONTENTS.add("com.android.settings");
+
+		SYSTEM_INDEX.put("CONTENTS", SYSTEM_CONTENTS);
+		INDEX_LIST.add(SYSTEM_INDEX);
 	}
 }

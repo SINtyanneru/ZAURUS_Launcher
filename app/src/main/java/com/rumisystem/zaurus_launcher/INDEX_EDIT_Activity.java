@@ -71,6 +71,8 @@ public class INDEX_EDIT_Activity extends AppCompatActivity {
 					//選択する
 					SELECT_ALL_APP = SELECT_APP_PACKAGE;
 
+					System.out.println(SELECT_APP_PACKAGE.packageName);
+
 					//選択したことをトースターでお知らせ
 					Toast.makeText(INDEX_EDIT_Activity.this,  "「" + PACKAGE_MANAGER.getApplicationLabel(SELECT_APP_PACKAGE).toString() + "」が選択されました", Toast.LENGTH_SHORT).show();
 				}
