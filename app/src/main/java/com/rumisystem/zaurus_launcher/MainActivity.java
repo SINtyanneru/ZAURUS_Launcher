@@ -83,6 +83,15 @@ public class MainActivity extends AppCompatActivity {
 					}
 				}
 			});
+
+			EDIT_BUTTON.setOnLongClickListener(new View.OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View v) {
+					Intent INTENT = new Intent(MainActivity.this, APP_ADMIN_Activity.class);
+					startActivity(INTENT);
+					return true;
+				}
+			});
 		} catch (Exception EX) {
 			EX.printStackTrace();
 			MESSAGE_BOX_SHOW(appContext, "エラー", EX.getMessage());

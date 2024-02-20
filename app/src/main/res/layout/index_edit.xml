@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="match_parent"
+	android:background="@color/SYSTEM_UI_BACKGROUND">
 
 	<LinearLayout
 		android:layout_width="match_parent"
@@ -9,8 +10,7 @@
 		android:layout_marginStart="1dp"
 		android:layout_marginEnd="1dp"
 		android:layout_marginBottom="1dp"
-		android:orientation="vertical"
-		android:background="@color/INDEX_EDIT_COLOR">
+		android:orientation="vertical">
 		<!--操作-->
 		<FrameLayout
 			android:layout_width="match_parent"

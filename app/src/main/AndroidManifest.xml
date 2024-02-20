@@ -30,5 +30,8 @@
 		<activity android:name=".INDEX_EDIT_Activity"
 			android:label="edit">
 		</activity>
+		<activity android:name=".APP_ADMIN_Activity"
+			android:label="app_admin">
+		</activity>
 	</application>
 </manifest>

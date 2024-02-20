@@ -10,7 +10,7 @@
 	<color name="red">#FFF00000</color>
 	<color name="aqua">#00FFF7</color>
 	<color name="MAIN_COLOR">#B2B2B2</color>
-	<color name="INDEX_EDIT_COLOR">#FFD34E</color>
+	<color name="SYSTEM_UI_BACKGROUND">#FFD34E</color>
 	<color name="APPLAY_BUTTON_COLOR">#1EC16D</color>
 	<color name="TEXT_BACKGROUND_COLOR">#1E47C1</color>
 </resources>
