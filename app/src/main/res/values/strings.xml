@@ -1,3 +1,5 @@
 <resources>
 	<string name="app_name">ザウルスランチャー</string>
+
+	<string name="NOW_LOADING">しばらくお待ちください...</string>
 </resources>

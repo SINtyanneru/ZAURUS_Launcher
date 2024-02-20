@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.system.Os;
 import android.util.Log;
 import android.view.View;
@@ -76,8 +77,16 @@ public class MainActivity extends AppCompatActivity {
 				@Override
 				public void onClick(View V) {
 					try{
-						Intent INTENT = new Intent(MainActivity.this, INDEX_EDIT_Activity.class);
-						startActivity(INTENT);
+						Toast.makeText(appContext, R.string.NOW_LOADING, Toast.LENGTH_SHORT).show();
+
+						//トーストが出るのがクソ遅いので、100ms待ってから開く
+						new Handler().postDelayed(new Runnable() {
+							@Override
+							public void run() {
+								Intent intent = new Intent(MainActivity.this, INDEX_EDIT_Activity.class);
+								startActivity(intent);
+							}
+						}, 100);
 					} catch (Exception EX){
 						MESSAGE_BOX_SHOW(appContext, "エラー", EX.getMessage());
 					}
@@ -87,8 +96,16 @@ public class MainActivity extends AppCompatActivity {
 			EDIT_BUTTON.setOnLongClickListener(new View.OnLongClickListener() {
 				@Override
 				public boolean onLongClick(View v) {
-					Intent INTENT = new Intent(MainActivity.this, APP_ADMIN_Activity.class);
-					startActivity(INTENT);
+					Toast.makeText(appContext, R.string.NOW_LOADING, Toast.LENGTH_SHORT).show();
+
+					//トーストが出るのがクソ遅いので、100ms待ってから開く
+					new Handler().postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							Intent intent = new Intent(MainActivity.this, APP_ADMIN_Activity.class);
+							startActivity(intent);
+						}
+					}, 100);
 					return true;
 				}
 			});
