@@ -68,6 +68,8 @@
 						android:id="@+id/EDIT_BUTTON"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
+						android:background="@color/APPLAY_BUTTON_COLOR"
+						android:textColor="@color/black"
 						android:text="編集" />
 				</FrameLayout>
 				<!--インデックス本体-->
