@@ -1,5 +1,7 @@
 package com.rumisystem.zaurus_launcher;
 
+import static com.rumisystem.zaurus_launcher.Cache.GET_DRAWABLE_CACHE;
+
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -54,7 +56,7 @@ public class AppIconAdapter extends BaseAdapter {
 
 			ApplicationInfo appInfo = appInfos.get(position);
 			String appName = packageManager.getApplicationLabel(appInfo).toString();
-			Drawable icon = packageManager.getApplicationIcon(appInfo.packageName);
+			Drawable icon = GET_DRAWABLE_CACHE(packageManager.getApplicationIcon(appInfo.packageName), appInfo.packageName.toString().replace(".", "_"));
 
 			imageView.setImageDrawable(icon);
 			textView.setText(appName);

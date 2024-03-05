@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
 			INDEX_INIT();
 			SELECT_INDEX_DROPMENU_INIT();
+			Cache.INIT();
 
 			//パッケージマネジャーを生成
 			PACKAGE_MANAGER = this.getPackageManager();
