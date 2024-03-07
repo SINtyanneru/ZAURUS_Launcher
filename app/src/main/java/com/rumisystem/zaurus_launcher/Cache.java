@@ -2,6 +2,8 @@ package com.rumisystem.zaurus_launcher;
 
 import static com.rumisystem.zaurus_launcher.MainActivity.appContext;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
@@ -18,6 +20,7 @@ import java.io.FileWriter;
 public class Cache {
 	private static String PATH = appContext.getExternalCacheDir().getPath();
 
+	//キャッシュの初期化
 	public static void INIT(){
 		try{
 			File CACHE_DIR = new File(PATH);
@@ -32,15 +35,27 @@ public class Cache {
 		}
 	}
 
-	public static Drawable GET_DRAWABLE_CACHE(Drawable DW, String FILE_NAME){
+	//アプリアイコンのキャッシュ
+	public static Drawable GET_DRAWABLE_CACHE(ApplicationInfo APP, PackageManager PM){
 		try{
+			//キャッシュのファイル名は、
+			String FILE_NAME = APP.packageName.replace(".", "_");
+
+			//アプリアイコンのキャッシュ
 			File FILE = new File(PATH, FILE_NAME);
 
+			//アプリアイコンのキャッシュはあるか
 			if (!FILE.exists()) {
 				System.out.println("キャッシュを作成しました：" + FILE_NAME);
+
+				//アプリアイコンを取得
+				Drawable DW = PM.getApplicationIcon(APP.packageName);
+
+				//キャッシュを作成
 				SAVE_DRAWABLE(DW, FILE_NAME);
 			}
 
+			//アプリアイコンを返す
 			return Drawable.createFromPath(FILE.getPath());
 		}catch (Exception EX){
 			EX.printStackTrace();
@@ -56,15 +71,18 @@ public class Cache {
 			if (DW instanceof BitmapDrawable) {
 				BITMAP = ((BitmapDrawable) DW).getBitmap();
 			} else {
+				//SVGをビットマップに変換する
 				BITMAP = Bitmap.createBitmap(DW.getIntrinsicWidth(), DW.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
 				Canvas CANVAS = new Canvas(BITMAP);
 				DW.setBounds(0, 0, CANVAS.getWidth(), CANVAS.getHeight());
 				DW.draw(CANVAS);
 			}
 
+			//キャッシュのファイルを作成する
 			File DW_FILE = new File(PATH, FILE_NAME);
 			if(!DW_FILE.exists()){
 				if(!DW_FILE.createNewFile()){
+					//失敗時の処理
 					System.out.println("ファイルを作れんかった");
 				}
 			}
@@ -72,6 +90,7 @@ public class Cache {
 			//画像をリサイズする
 			Bitmap RESIZE_BITMAP = Bitmap.createScaledBitmap(BITMAP, 64, 64, true);
 
+			//キャッシュに書き込む
 			FileOutputStream FOS = new FileOutputStream(DW_FILE);
 			RESIZE_BITMAP.compress(Bitmap.CompressFormat.PNG, 100, FOS);
 			FOS.close();

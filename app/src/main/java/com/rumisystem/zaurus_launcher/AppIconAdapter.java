@@ -19,24 +19,24 @@ import java.util.List;
 
 public class AppIconAdapter extends BaseAdapter {
 
-	private Context context;
-	private List<ApplicationInfo> appInfos;
-	private PackageManager packageManager;
+	private Context CONTEXT;
+	private List<ApplicationInfo> APP_INFOS;
+	private PackageManager PM;
 
 	public AppIconAdapter(Context context, List<ApplicationInfo> appInfos, PackageManager packageManager) {
-		this.context = context;
-		this.appInfos = appInfos;
-		this.packageManager = packageManager;
+		this.CONTEXT = context;
+		this.APP_INFOS = appInfos;
+		this.PM = packageManager;
 	}
 
 	@Override
 	public int getCount() {
-		return appInfos.size();
+		return APP_INFOS.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return appInfos.get(position);
+		return APP_INFOS.get(position);
 	}
 
 	@Override
@@ -48,15 +48,15 @@ public class AppIconAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		try{
 			if (convertView == null) {
-				convertView = LayoutInflater.from(context).inflate(R.layout.grid_item, parent, false);
+				convertView = LayoutInflater.from(CONTEXT).inflate(R.layout.grid_item, parent, false);
 			}
 
 			ImageView imageView = convertView.findViewById(R.id.imageView);
 			TextView textView = convertView.findViewById(R.id.textView);
 
-			ApplicationInfo appInfo = appInfos.get(position);
-			String appName = packageManager.getApplicationLabel(appInfo).toString();
-			Drawable icon = GET_DRAWABLE_CACHE(packageManager.getApplicationIcon(appInfo.packageName), appInfo.packageName.toString().replace(".", "_"));
+			ApplicationInfo appInfo = APP_INFOS.get(position);
+			String appName = PM.getApplicationLabel(appInfo).toString();
+			Drawable icon = GET_DRAWABLE_CACHE(appInfo, PM);
 
 			imageView.setImageDrawable(icon);
 			textView.setText(appName);
