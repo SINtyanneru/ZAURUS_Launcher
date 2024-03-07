@@ -1,5 +1,6 @@
 package com.rumisystem.zaurus_launcher;
 
+import static com.rumisystem.zaurus_launcher.INDEX_DATA.DELETE_INDEX_CONTENTS;
 import static com.rumisystem.zaurus_launcher.INDEX_DATA.INDEX_LIST;
 
 import android.content.Context;
@@ -37,6 +38,8 @@ public class LIB {
 			for(HashMap<String, Object> ROW:INDEX_LIST){
 				//指定されたIDとインデックスのIDが一致するか(一致するまで回す)
 				if(ROW.get("ID").toString().equals(ID)){
+					System.out.println("読み込み：" + ID);
+
 					//アプリ一覧をクリア
 					APP_LIST.clear();
 
@@ -47,7 +50,9 @@ public class LIB {
 							APP_LIST.add(APP);
 						} catch (PackageManager.NameNotFoundException E) {
 							//パッケージがない
-							//が、何もしない
+							//ので消す
+							DELETE_INDEX_CONTENTS(ID, PACKAGE_NAME);
+							System.out.println("パッケージが無いので消します");
 						}
 					}
 

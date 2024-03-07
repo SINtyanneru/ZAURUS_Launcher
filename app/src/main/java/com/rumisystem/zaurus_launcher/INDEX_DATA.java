@@ -3,6 +3,9 @@ package com.rumisystem.zaurus_launcher;
 import static com.rumisystem.zaurus_launcher.LIB.MESSAGE_BOX_SHOW;
 import static com.rumisystem.zaurus_launcher.MainActivity.appContext;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,6 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -124,6 +128,38 @@ public class INDEX_DATA {
 			}
 		} catch (Exception EX){
 			MESSAGE_BOX_SHOW(appContext, "エラー", EX.getMessage());
+		}
+	}
+
+	//インデックス内の特定のアイテムを削除する関数
+	public static void DELETE_INDEX_CONTENTS(String INDEX_ID, String CONTENTS_ID) {
+		try{
+			int I = 0;
+
+			for(HashMap<String, Object> ROW:INDEX_LIST){
+				//指定されたIDとインデックスのIDが一致するか(一致するまで回す)
+				if(ROW.get("ID").toString().equals(INDEX_ID)){
+					for(String PACKAGE_NAME:(List<String>)ROW.get("CONTENTS")){
+
+						if(PACKAGE_NAME.toString().equals(CONTENTS_ID)){
+							List<String> OLD_CONTENTS = (List<String>)INDEX_LIST.get(I).get("CONTENTS");
+
+							OLD_CONTENTS.remove(PACKAGE_NAME);
+
+							//書き換え
+							INDEX_LIST.get(I).put("CONTENTS", OLD_CONTENTS);
+
+							//保存
+							SAVE_INDEX_FILE();
+							return;
+						}
+					}
+				}
+
+				I++;
+			}
+		}catch (Exception EX){
+			EX.printStackTrace();
 		}
 	}
 
