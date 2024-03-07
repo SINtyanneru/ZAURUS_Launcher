@@ -41,19 +41,22 @@ public class LIB {
 					APP_LIST.clear();
 
 					for(String PACKAGE_NAME:(List<String>)ROW.get("CONTENTS")){
-						ApplicationInfo APP = PACKAGE_MANAGER.getApplicationInfo(PACKAGE_NAME, PackageManager.GET_META_DATA);
-						APP_LIST.add(APP);
+						//パッケージが存在するか
+						try{
+							ApplicationInfo APP = PACKAGE_MANAGER.getApplicationInfo(PACKAGE_NAME, PackageManager.GET_META_DATA);
+							APP_LIST.add(APP);
+						} catch (PackageManager.NameNotFoundException E) {
+							//パッケージがない
+							//が、何もしない
+						}
 					}
 
 					GRID_VIEW.setAdapter(new AppIconAdapter(appContext, APP_LIST, PACKAGE_MANAGER));
 				}
 			}
-		} catch (PackageManager.NameNotFoundException e) {
-			//パッケージがない
-			MESSAGE_BOX_SHOW(appContext, "エラー", "パッケージが存在しません");
 		} catch (Exception EX){
 			EX.printStackTrace();
-			MESSAGE_BOX_SHOW(appContext, "エラー", EX.getMessage());
+			MESSAGE_BOX_SHOW(appContext, "エラー：LIB/LOAD_INDEX", EX.getMessage());
 		}
 	}
 }

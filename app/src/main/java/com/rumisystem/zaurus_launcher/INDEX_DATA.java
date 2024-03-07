@@ -91,8 +91,7 @@ public class INDEX_DATA {
 					JsonNode ROW = INDEX_CONTENTS_JSON.get(I);
 
 					//JsonNodeをHashMap化
-					ObjectMapper OM2 = new ObjectMapper();
-					HashMap<String, Object> RESULT = OM2.convertValue(ROW, new TypeReference<HashMap<String, Object>>(){});
+					HashMap<String, Object> RESULT = OM.convertValue(ROW, new TypeReference<HashMap<String, Object>>(){});
 
 					//それを追加
 					INDEX_LIST.add(RESULT);
