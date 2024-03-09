@@ -26,7 +26,7 @@
 					android:background="@color/TEXT_BACKGROUND_COLOR"
 					android:textColor="@color/white"
 					android:textSize="20dp"
-					android:text="ｲﾝﾃﾞｯｸｽ項目の編集" />
+					android:text="@string/INDEX_EDITOR.TITLE" />
 				<TextView
 					android:id="@+id/INDEX_NAME"
 					android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
 					android:layout_height="wrap_content"
 					android:background="@color/APPLAY_BUTTON_COLOR"
 					android:textColor="@color/black"
-					android:text="設定" />
+					android:text="@string/SETTING_APPLY" />
 			</FrameLayout>
 		</FrameLayout>
 		<!--インデックス内のアプリ一覧-->
@@ -78,13 +78,13 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_weight="1"
-					android:text="インデックスに追加" />
+					android:text="@string/INDEX_EDITOR.ADD" />
 				<Button
 					android:id="@+id/RM_BUTTON"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_weight="1"
-					android:text="インデックスから削除" />
+					android:text="@string/INDEX_EDITOR.RM" />
 			</LinearLayout>
 		</FrameLayout>
 		<!--端末内の全アプリ-->

@@ -2,4 +2,8 @@
 	<string name="app_name">ザウルスランチャー</string>
 
 	<string name="NOW_LOADING">しばらくお待ちください...</string>
+	<string name="INDEX_EDITOR.TITLE">ｲﾝﾃﾞｯｸｽ項目の編集</string>
+	<string name="SETTING_APPLY">設定</string>
+	<string name="INDEX_EDITOR.ADD">ｲﾝﾃﾞｯｸｽに追加</string>
+	<string name="INDEX_EDITOR.RM">ｲﾝﾃﾞｯｸｽから削除</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">ZAURUS Lanĉilo</string>
+	<string name="NOW_LOADING">Bonvolu atendi iom da tempo...</string>
+	<string name="INDEX_EDITOR.TITLE">Redaktado de indeksaĵoj</string>
+	<string name="SETTING_APPLY">apliki ŝanĝojn</string>
+	<string name="INDEX_EDITOR.ADD">Aldoni al indekso</string>
+	<string name="INDEX_EDITOR.RM">Forigi el indekso</string>
+</resources>
