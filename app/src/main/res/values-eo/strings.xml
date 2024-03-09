@@ -6,4 +6,5 @@
 	<string name="SETTING_APPLY">apliki ŝanĝojn</string>
 	<string name="INDEX_EDITOR.ADD">Aldoni al indekso</string>
 	<string name="INDEX_EDITOR.RM">Forigi el indekso</string>
+	<string name="INDEX_LIST_EDITOR.TITLE">Indeksaj agordoj</string>
 </resources>

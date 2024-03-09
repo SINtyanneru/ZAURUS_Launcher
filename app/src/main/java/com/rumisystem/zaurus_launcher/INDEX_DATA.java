@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class INDEX_DATA {
 	public static List<HashMap<String, Object>> INDEX_LIST = new ArrayList<>();
@@ -127,6 +128,7 @@ public class INDEX_DATA {
 				MESSAGE_BOX_SHOW(appContext, "エラー", "なぜかファイルがありません、なんでだろうね");
 			}
 		} catch (Exception EX){
+			EX.printStackTrace();
 			MESSAGE_BOX_SHOW(appContext, "エラー", EX.getMessage());
 		}
 	}

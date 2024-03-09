@@ -73,7 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
 			GRID_SELECT_EVENT();
 
+			//編集ボタン
 			Button EDIT_BUTTON = findViewById(R.id.EDIT_BUTTON);
+
+			//編集ボタンタップ
 			EDIT_BUTTON.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View V) {
@@ -94,19 +97,12 @@ public class MainActivity extends AppCompatActivity {
 				}
 			});
 
+			//編集ボタン長押し
 			EDIT_BUTTON.setOnLongClickListener(new View.OnLongClickListener() {
 				@Override
 				public boolean onLongClick(View v) {
-					Toast.makeText(appContext, R.string.NOW_LOADING, Toast.LENGTH_SHORT).show();
-
-					//トーストが出るのがクソ遅いので、100ms待ってから開く
-					new Handler().postDelayed(new Runnable() {
-						@Override
-						public void run() {
-							Intent intent = new Intent(MainActivity.this, APP_ADMIN_Activity.class);
-							startActivity(intent);
-						}
-					}, 100);
+					Intent intent = new Intent(MainActivity.this, INDEX_LIST_EDITOR_Activity.class);
+					startActivity(intent);
 					return true;
 				}
 			});
