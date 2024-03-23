@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 	private ArrayList<ApplicationInfo> APP_LIST;
 	private PackageManager PACKAGE_MANAGER;
 	public static Context appContext;
+	public static String VERSION = null;
 
 
 	@Override
@@ -50,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
 			getSupportActionBar().hide();
 
 			setContentView(R.layout.activity_main);
+
+			//自分のバージョンを取得
+			VERSION = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
 
 			//コンテキストに自分を入れる
 			appContext = this;

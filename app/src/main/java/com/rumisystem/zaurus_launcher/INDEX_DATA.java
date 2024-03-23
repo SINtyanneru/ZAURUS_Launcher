@@ -1,6 +1,8 @@
 package com.rumisystem.zaurus_launcher;
 
+import static com.rumisystem.zaurus_launcher.CONFIG.APP_DIR;
 import static com.rumisystem.zaurus_launcher.LIB.MESSAGE_BOX_SHOW;
+import static com.rumisystem.zaurus_launcher.MainActivity.VERSION;
 import static com.rumisystem.zaurus_launcher.MainActivity.appContext;
 
 import android.content.pm.ApplicationInfo;
@@ -25,8 +27,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class INDEX_DATA {
 	public static List<HashMap<String, Object>> INDEX_LIST = new ArrayList<>();
 
-	private static String  APP_DIR = appContext.getExternalFilesDir(null).getPath();
-
 
 	//インデックスを初期化する
 	public static void INDEX_INIT(){
@@ -35,6 +35,8 @@ public class INDEX_DATA {
 			GEN_INDEX_FILE();
 		}
 	}
+
+
 
 	public static void GEN_INDEX_FILE(){
 		try{
