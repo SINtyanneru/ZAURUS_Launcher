@@ -62,8 +62,11 @@ public class MainActivity extends AppCompatActivity {
 			TextView PHONE_NAME = findViewById(R.id.PHONE_NAME);
 			PHONE_NAME.setText(Build.BRAND.toUpperCase());
 
-			INDEX_INIT();
+			//設定ファイルを初期化
+			CONFIG.INIT();
+			//インデックスを選ぶドロップメニューを初期化
 			SELECT_INDEX_DROPMENU_INIT();
+			//キャッシュを初期化
 			Cache.INIT();
 
 			//パッケージマネジャーを生成
