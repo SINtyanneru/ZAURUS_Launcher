@@ -1,13 +1,18 @@
 package com.rumisystem.zaurus_launcher;
 
 import static com.rumisystem.zaurus_launcher.Activity.MainActivity.appContext;
+import static com.rumisystem.zaurus_launcher.LIB.APPDATA_TO_APINFO;
 
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+
+import com.rumisystem.zaurus_launcher.GATA.APPData.APPData;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,27 +36,35 @@ public class Cache {
 	}
 
 	//アプリアイコンのキャッシュ
-	public static Drawable GET_DRAWABLE_CACHE(ApplicationInfo APP, PackageManager PM){
+	public static Drawable GET_DRAWABLE_CACHE(APPData APP, PackageManager PM, Context CONTEXT){
 		try{
-			//キャッシュのファイル名は、
-			String FILE_NAME = APP.packageName.replace(".", "_");
+			//ランチャー独自のアプリではないなら実行
+			if (!APP.PACKAGE_NAME.startsWith("rumi_zaurus")) {
+				//キャッシュのファイル名は、
+				ApplicationInfo APPINFO = APPDATA_TO_APINFO(APP, CONTEXT);
+				String FILE_NAME = APPINFO.packageName.replace(".", "_");
 
-			//アプリアイコンのキャッシュ
-			File FILE = new File(PATH, FILE_NAME);
+				//アプリアイコンのキャッシュ
+				File FILE = new File(PATH, FILE_NAME);
 
-			//アプリアイコンのキャッシュはあるか
-			if (!FILE.exists()) {
-				System.out.println("キャッシュを作成しました：" + FILE_NAME);
+				//アプリアイコンのキャッシュはあるか
+				if (!FILE.exists()) {
+					System.out.println("キャッシュを作成しました：" + FILE_NAME);
 
-				//アプリアイコンを取得
-				Drawable DW = PM.getApplicationIcon(APP.packageName);
+					//アプリアイコンを取得
+					Drawable DW = PM.getApplicationIcon(APPINFO.packageName);
 
-				//キャッシュを作成
-				SAVE_DRAWABLE(DW, FILE_NAME);
+					//キャッシュを作成
+					SAVE_DRAWABLE(DW, FILE_NAME);
+				}
+
+				//アプリアイコンを返す
+				return Drawable.createFromPath(FILE.getPath());
+			} else {
+				Bitmap BITMAP = BitmapFactory.decodeResource(CONTEXT.getResources(), R.drawable.ic_launcher_background);
+				BitmapDrawable BDW = new BitmapDrawable(CONTEXT.getResources(), BITMAP);
+				return BDW;
 			}
-
-			//アプリアイコンを返す
-			return Drawable.createFromPath(FILE.getPath());
 		}catch (Exception EX){
 			EX.printStackTrace();
 			return null;

@@ -1,16 +1,23 @@
+<!--
+	泥のテーマファイル意味分からん
+	色を変えても全く変わらない、その所為でまったくZAURUSに似ていない、
+	之も全て頭おかしい仕様な泥が悪いんだが、マジでクソすぎるから誰か0から100まで説明してくれ。
+	一体なんでこんなゴミなのか、そしてそのゴミな仕様を0から100まで。
+	https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q14303710629
+-->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.ZAURUS_Launcher" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/APPLAY_BUTTON_COLOR</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-    </style>
+	<!-- Base application theme. -->
+	<style name="Theme.ZAURUS_Launcher" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+		<!-- Primary brand color. -->
+		<item name="colorPrimary">@color/APPLAY_BUTTON_COLOR</item>
+		<item name="colorPrimaryVariant">@color/purple_700</item>
+		<item name="colorOnPrimary">@color/white</item>
+		<!-- Secondary brand color. -->
+		<item name="colorSecondary">@color/teal_200</item>
+		<item name="colorSecondaryVariant">@color/teal_700</item>
+		<item name="colorOnSecondary">@color/black</item>
+		<!-- Status bar color. -->
+		<item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+		<!-- Customize your theme here. -->
+	</style>
 </resources>

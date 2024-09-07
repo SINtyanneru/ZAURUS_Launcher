@@ -77,7 +77,11 @@ public class INDEX_EDIT_Activity extends AppCompatActivity {
 
 					//選択したことをトースターでお知らせ
 					try {
-						Toast.makeText(INDEX_EDIT_Activity.this,  "「" + PACKAGE_MANAGER.getApplicationLabel(APPDATA_TO_APINFO(SELECT_APP_PACKAGE, INDEX_EDIT_Activity.this)).toString() + "」が選択されました", Toast.LENGTH_SHORT).show();
+						if (!SELECT_APP_PACKAGE.PACKAGE_NAME.startsWith("rumi_zaurus")) {
+							Toast.makeText(INDEX_EDIT_Activity.this,  "「" + PACKAGE_MANAGER.getApplicationLabel(APPDATA_TO_APINFO(SELECT_APP_PACKAGE, INDEX_EDIT_Activity.this)).toString() + "」が選択されました", Toast.LENGTH_SHORT).show();
+						} else {
+							Toast.makeText(INDEX_EDIT_Activity.this,  "「" + SELECT_APP_PACKAGE.NAME + "」が選択されました", Toast.LENGTH_SHORT).show();
+						}
 					} catch (PackageManager.NameNotFoundException EX) {
 						EX.printStackTrace();
 						MESSAGE_BOX_SHOW(INDEX_EDIT_Activity.this, "エラー", EX.getMessage());
@@ -183,25 +187,30 @@ public class INDEX_EDIT_Activity extends AppCompatActivity {
 		ALL_APP_LIST_LIST.clear();
 
 		for(APPData APP:GET_ALL_APP(this)){
-			Intent launchIntent = getPackageManager().getLaunchIntentForPackage(APP.PACKAGE_NAME);
+			//ランチャー独自のアプリではないなら実行
+			if (!APP.PACKAGE_NAME.startsWith("rumi_zaurus")) {
+				Intent launchIntent = getPackageManager().getLaunchIntentForPackage(APP.PACKAGE_NAME);
 
-			//実行可能なインテントがあるか、無いということはランチャーから実行できないので除外する
-			if (launchIntent != null) {
-				boolean NOT_DUB = false; //アプリがダブってるかどうかを登録する変数
+				//実行可能なインテントがあるか、無いということはランチャーから実行できないので除外する
+				if (launchIntent != null) {
+					boolean NOT_DUB = false; //アプリがダブってるかどうかを登録する変数
 
-				//インデックスの内容を全て確認して、アプリがダブってないかをチェック
-				for(String PACKAGE_NAME:(List<String>)INDEX_LIST.get(INDEX_ID).get("CONTENTS")){
-					if(APP.PACKAGE_NAME.equals(PACKAGE_NAME)){
-						//ダブってる
-						NOT_DUB = true;
-						break;
+					//インデックスの内容を全て確認して、アプリがダブってないかをチェック
+					for(String PACKAGE_NAME:(List<String>)INDEX_LIST.get(INDEX_ID).get("CONTENTS")){
+						if(APP.PACKAGE_NAME.equals(PACKAGE_NAME)){
+							//ダブってる
+							NOT_DUB = true;
+							break;
+						}
+					}
+
+					//ダブって無ければ追加
+					if(!NOT_DUB){
+						ALL_APP_LIST_LIST.add(APP);
 					}
 				}
-
-				//ダブって無ければ追加
-				if(!NOT_DUB){
-					ALL_APP_LIST_LIST.add(APP);
-				}
+			} else {
+				ALL_APP_LIST_LIST.add(APP);
 			}
 		}
 

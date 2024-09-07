@@ -56,11 +56,15 @@ public class AppIconAdapter extends BaseAdapter {
 			TextView textView = convertView.findViewById(R.id.textView);
 
 			APPData APPDATA = APPDATA_LIST.get(position);
-			String appName = PM.getApplicationLabel(APPDATA_TO_APINFO(APPDATA, CONTEXT)).toString();
-			Drawable icon = GET_DRAWABLE_CACHE(APPDATA_TO_APINFO(APPDATA, CONTEXT), PM);
+			String APP_NAME = APPDATA.NAME;
+			//ランチャー独自アプリじゃないなら正規の名前を読み込む
+			if (!APPDATA.PACKAGE_NAME.startsWith("rumi_zaurus")) {
+				APP_NAME = PM.getApplicationLabel(APPDATA_TO_APINFO(APPDATA, CONTEXT)).toString();
+			}
+			Drawable icon = GET_DRAWABLE_CACHE(APPDATA, PM, CONTEXT);
 
 			imageView.setImageDrawable(icon);
-			textView.setText(appName);
+			textView.setText(APP_NAME);
 
 			return convertView;
 		}catch (Exception EX){

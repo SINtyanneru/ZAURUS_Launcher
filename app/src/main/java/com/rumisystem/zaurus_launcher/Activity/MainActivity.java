@@ -160,16 +160,38 @@ public class MainActivity extends AppCompatActivity {
 				String SELECT_APP_PACKAGE_NAME = APP_LIST.get(POS).PACKAGE_NAME;
 
 				try {
-					//パッケージがあるか(無ければエラーになる)
-					PACKAGE_MANAGER.getPackageInfo(SELECT_APP_PACKAGE_NAME, PackageManager.GET_ACTIVITIES);
+					//タップしたアプリがランチャー独自アプリなら
+					if (!SELECT_APP_PACKAGE_NAME.startsWith("rumi_zaurus")) {
+						//パッケージがあるか(無ければエラーになる)
+						PACKAGE_MANAGER.getPackageInfo(SELECT_APP_PACKAGE_NAME, PackageManager.GET_ACTIVITIES);
 
-					Intent launchIntent = getPackageManager().getLaunchIntentForPackage(SELECT_APP_PACKAGE_NAME);
-					//実行可能なインテントがあるか
-					if (launchIntent != null) {
-						//あるので実行する
-						startActivity(launchIntent);
+						Intent launchIntent = getPackageManager().getLaunchIntentForPackage(SELECT_APP_PACKAGE_NAME);
+						//実行可能なインテントがあるか
+						if (launchIntent != null) {
+							//あるので実行する
+							startActivity(launchIntent);
+						} else {
+							MESSAGE_BOX_SHOW(appContext, "エラー", "実行可能なインテントがありません");
+						}
 					} else {
-						MESSAGE_BOX_SHOW(appContext, "エラー", "実行可能なインテントがありません");
+						Toast.makeText(appContext, R.string.NOW_LOADING, Toast.LENGTH_SHORT).show();
+						//トーストが出るのがクソ遅いので、100ms待ってから開く
+						new Handler().postDelayed(new Runnable() {
+							@Override
+							public void run() {
+								switch (SELECT_APP_PACKAGE_NAME) {
+									case "rumi_zaurus.app_admin": {
+										Intent intent = new Intent(MainActivity.this, APP_ADMIN_Activity.class);
+										startActivity(intent);
+										break;
+									}
+
+									default: {
+										MESSAGE_BOX_SHOW(appContext, "エラー", "実行可能なインテントがありません");
+									}
+								}
+							}
+						}, 100);
 					}
 				} catch (PackageManager.NameNotFoundException e) {
 					//パッケージがない
