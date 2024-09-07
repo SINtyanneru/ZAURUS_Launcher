@@ -7,4 +7,5 @@
 	<string name="INDEX_EDITOR.ADD">ｲﾝﾃﾞｯｸｽに追加</string>
 	<string name="INDEX_EDITOR.RM">ｲﾝﾃﾞｯｸｽから削除</string>
 	<string name="INDEX_LIST_EDITOR.TITLE">ｲﾝﾃﾞｯｸｽの設定</string>
+    <string name="APP_ADMIN.NAME">APKソフト</string>
 </resources>

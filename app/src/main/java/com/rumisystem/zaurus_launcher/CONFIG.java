@@ -1,8 +1,8 @@
 package com.rumisystem.zaurus_launcher;
 
 import static com.rumisystem.zaurus_launcher.LIB.MESSAGE_BOX_SHOW;
-import static com.rumisystem.zaurus_launcher.MainActivity.VERSION;
-import static com.rumisystem.zaurus_launcher.MainActivity.appContext;
+import static com.rumisystem.zaurus_launcher.Activity.MainActivity.VERSION;
+import static com.rumisystem.zaurus_launcher.Activity.MainActivity.appContext;
 
 import java.io.BufferedWriter;
 import java.io.File;

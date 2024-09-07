@@ -1,6 +1,6 @@
 package com.rumisystem.zaurus_launcher;
 
-import static com.rumisystem.zaurus_launcher.MainActivity.appContext;
+import static com.rumisystem.zaurus_launcher.Activity.MainActivity.appContext;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -8,14 +8,9 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 
 public class Cache {
 	private static String PATH = appContext.getExternalCacheDir().getPath();

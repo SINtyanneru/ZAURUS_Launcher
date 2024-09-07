@@ -1,9 +1,9 @@
-package com.rumisystem.zaurus_launcher;
+package com.rumisystem.zaurus_launcher.Activity;
+
+import static com.rumisystem.zaurus_launcher.LIB.APPDATA_TO_APINFO;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.rumisystem.zaurus_launcher.GATA.APPData.APPData;
+import com.rumisystem.zaurus_launcher.LIB;
+import com.rumisystem.zaurus_launcher.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +24,11 @@ public class APP_ADMIN_Activity extends AppCompatActivity {
 	private ListView APP_LIST_VIEW;
 	private ArrayAdapter<String> ADAPTER;
 	private ArrayList<String> APP_LISTVIEW_LIST;
-	private List<ApplicationInfo> APP_LIST = new ArrayList<>();
+	private List<APPData> APP_LIST = new ArrayList<>();
 
 	private static Context appContext;
 
-	private ApplicationInfo SELECTED_APP;
+	private APPData SELECTED_APP;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +53,16 @@ public class APP_ADMIN_Activity extends AppCompatActivity {
 				@Override
 				public void onItemClick(AdapterView<?> PARENT, View SELECTED_ITEM, int POS, long ID) {
 					if(APP_LIST.get(POS) != null){
-						String PACKAGE_NAME = getPackageManager().getApplicationLabel(APP_LIST.get(POS)).toString();
+						try{
+							String PACKAGE_NAME = getPackageManager().getApplicationLabel(APPDATA_TO_APINFO(APP_LIST.get(POS), appContext)).toString();
 
-						SELECTED_APP = APP_LIST.get(POS);
+							SELECTED_APP = APP_LIST.get(POS);
 
-						Toast.makeText(appContext,  "「" + PACKAGE_NAME + "」を選択しました", Toast.LENGTH_SHORT).show();
+							Toast.makeText(appContext,  "「" + PACKAGE_NAME + "」を選択しました", Toast.LENGTH_SHORT).show();
+						} catch (Exception EX) {
+							EX.printStackTrace();
+							Toast.makeText(appContext, EX.getMessage(), Toast.LENGTH_SHORT).show();
+						}
 					}
 				}
 			});
@@ -61,10 +70,10 @@ public class APP_ADMIN_Activity extends AppCompatActivity {
 			//一覧を初期化
 			ADAPTER.clear();
 
-			for(ApplicationInfo APP:LIB.GET_ALL_APP(appContext)){
+			for(APPData APP: LIB.GET_ALL_APP(appContext)){
 				try{
-					String PACKAGE_NAME = getPackageManager().getApplicationLabel(APP).toString();
-					Intent launchIntent = getPackageManager().getLaunchIntentForPackage(APP.packageName);
+					String PACKAGE_NAME = getPackageManager().getApplicationLabel(APPDATA_TO_APINFO(APP, this)).toString();
+					Intent launchIntent = getPackageManager().getLaunchIntentForPackage(APP.PACKAGE_NAME);
 
 					//実行可能なインテントがあるか、無いということはランチャーから実行できないので除外する
 					if (launchIntent != null) {

@@ -1,6 +1,5 @@
-package com.rumisystem.zaurus_launcher;
+package com.rumisystem.zaurus_launcher.Activity;
 
-import static com.rumisystem.zaurus_launcher.INDEX_DATA.INDEX_INIT;
 import static com.rumisystem.zaurus_launcher.INDEX_DATA.INDEX_LIST;
 import static com.rumisystem.zaurus_launcher.LIB.LOAD_INDEX;
 import static com.rumisystem.zaurus_launcher.LIB.MESSAGE_BOX_SHOW;
@@ -9,34 +8,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.system.Os;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.rumisystem.zaurus_launcher.CONFIG;
+import com.rumisystem.zaurus_launcher.Cache;
+import com.rumisystem.zaurus_launcher.GATA.APPData.APPData;
+import com.rumisystem.zaurus_launcher.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 	private GridView GRID_VIEW;
-	private ArrayList<ApplicationInfo> APP_LIST;
+	private ArrayList<APPData> APP_LIST;
 	private PackageManager PACKAGE_MANAGER;
 	public static Context appContext;
 	public static String VERSION = null;
@@ -160,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 		GRID_VIEW.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> PARENT, View VIEW, int POS, long ID) {
-				String SELECT_APP_PACKAGE_NAME = APP_LIST.get(POS).packageName.toString();
+				String SELECT_APP_PACKAGE_NAME = APP_LIST.get(POS).PACKAGE_NAME;
 
 				try {
 					//パッケージがあるか(無ければエラーになる)

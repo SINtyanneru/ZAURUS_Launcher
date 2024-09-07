@@ -1,9 +1,9 @@
-package com.rumisystem.zaurus_launcher;
+package com.rumisystem.zaurus_launcher.GATA;
 
 import static com.rumisystem.zaurus_launcher.Cache.GET_DRAWABLE_CACHE;
+import static com.rumisystem.zaurus_launcher.LIB.APPDATA_TO_APINFO;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.rumisystem.zaurus_launcher.GATA.APPData.APPData;
 import com.rumisystem.zaurus_launcher.R;
 
 import java.util.List;
@@ -20,23 +21,23 @@ import java.util.List;
 public class AppIconAdapter extends BaseAdapter {
 
 	private Context CONTEXT;
-	private List<ApplicationInfo> APP_INFOS;
+	private List<APPData> APPDATA_LIST;
 	private PackageManager PM;
 
-	public AppIconAdapter(Context context, List<ApplicationInfo> appInfos, PackageManager packageManager) {
+	public AppIconAdapter(Context context, List<APPData> APPDATA_LIST, PackageManager packageManager) {
 		this.CONTEXT = context;
-		this.APP_INFOS = appInfos;
+		this.APPDATA_LIST = APPDATA_LIST;
 		this.PM = packageManager;
 	}
 
 	@Override
 	public int getCount() {
-		return APP_INFOS.size();
+		return APPDATA_LIST.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return APP_INFOS.get(position);
+		return APPDATA_LIST.get(position);
 	}
 
 	@Override
@@ -54,9 +55,9 @@ public class AppIconAdapter extends BaseAdapter {
 			ImageView imageView = convertView.findViewById(R.id.imageView);
 			TextView textView = convertView.findViewById(R.id.textView);
 
-			ApplicationInfo appInfo = APP_INFOS.get(position);
-			String appName = PM.getApplicationLabel(appInfo).toString();
-			Drawable icon = GET_DRAWABLE_CACHE(appInfo, PM);
+			APPData APPDATA = APPDATA_LIST.get(position);
+			String appName = PM.getApplicationLabel(APPDATA_TO_APINFO(APPDATA, CONTEXT)).toString();
+			Drawable icon = GET_DRAWABLE_CACHE(APPDATA_TO_APINFO(APPDATA, CONTEXT), PM);
 
 			imageView.setImageDrawable(icon);
 			textView.setText(appName);

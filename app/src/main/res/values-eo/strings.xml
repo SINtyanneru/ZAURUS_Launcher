@@ -7,4 +7,5 @@
 	<string name="INDEX_EDITOR.ADD">Aldoni al indekso</string>
 	<string name="INDEX_EDITOR.RM">Forigi el indekso</string>
 	<string name="INDEX_LIST_EDITOR.TITLE">Indeksaj agordoj</string>
+    <string name="APP_ADMIN.NAME">APK APP</string>
 </resources>

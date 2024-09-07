@@ -1,4 +1,4 @@
-package com.rumisystem.zaurus_launcher;
+package com.rumisystem.zaurus_launcher.Activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +12,9 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
+
+import com.rumisystem.zaurus_launcher.INDEX_DATA;
+import com.rumisystem.zaurus_launcher.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
