@@ -17,12 +17,34 @@
 				android:layout_height="match_parent"
 				android:layout_weight="14"
 				android:background="@color/HEADER_BACKGROUND_1">
-
-			<Spinner
+			<LinearLayout
+					android:orientation="horizontal"
 					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:id="@+id/index_dropdown"
-					android:spinnerMode="dropdown"/>
+					android:layout_height="match_parent">
+				<!--インデックス選択-->
+				<FrameLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_weight="1">
+					<Spinner
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:id="@+id/index_dropdown"
+							android:spinnerMode="dropdown" />
+				</FrameLayout>
+				<!--なんかあれ-->
+				<FrameLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_weight="2">
+					<TextView
+							android:text="ZAURUS"
+							android:textSize="90px"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:id="@+id/textView2" />
+				</FrameLayout>
+			</LinearLayout>
 		</FrameLayout>
 		<FrameLayout
 				android:layout_width="match_parent"
