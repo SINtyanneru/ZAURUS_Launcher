@@ -13,4 +13,5 @@
 	<color name="HEADER_BACKGROUND_2">#CCCCCC</color>
 	<color name="BACKGROUND">#FFD34E</color>
 	<color name="APPLAY_BUTTON_COLOR">#55F1A1</color>
+	<color name="TITLE_BACKGROUND">#43AEE7</color>
 </resources>

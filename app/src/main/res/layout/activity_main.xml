@@ -46,11 +46,22 @@
 				</FrameLayout>
 			</LinearLayout>
 		</FrameLayout>
+		<!--編集とかを表示する部分-->
 		<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:layout_weight="14"
-				android:background="@color/HEADER_BACKGROUND_2">
+				android:background="@color/HEADER_BACKGROUND_2"
+				android:paddingLeft="250dp">
+			<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
+				<Button
+						android:text="@string/INDEX_EDIT"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:id="@+id/index_edit_button" />
+			</FrameLayout>
 		</FrameLayout>
 		<!--アプリ一覧ー-->
 		<FrameLayout

@@ -9,4 +9,6 @@
 	<string name="INDEX_LIST_EDITOR.TITLE">ｲﾝﾃﾞｯｸｽの設定</string>
 	<string name="APP_ADMIN.NAME">APK管理</string>
     <string name="APP_ADMIN.TORU">取る</string>
+	<string name="INDEX_EDIT">編集</string>
+	<string name="SETTING_CANCEL">中止</string>
 </resources>

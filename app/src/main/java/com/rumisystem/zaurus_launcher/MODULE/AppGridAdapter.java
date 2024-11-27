@@ -1,4 +1,4 @@
-package com.rumisystem.zaurus_launcher.Activity.MODULE;
+package com.rumisystem.zaurus_launcher.MODULE;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.rumisystem.zaurus_launcher.Activity.TYPE.AppData;
+import com.rumisystem.zaurus_launcher.TYPE.AppData;
 import com.rumisystem.zaurus_launcher.R;
 
 import java.util.List;

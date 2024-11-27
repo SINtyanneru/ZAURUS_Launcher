@@ -1,4 +1,4 @@
-package com.rumisystem.zaurus_launcher.Activity.TYPE;
+package com.rumisystem.zaurus_launcher.TYPE;
 
 import android.content.Context;
 import android.content.Intent;

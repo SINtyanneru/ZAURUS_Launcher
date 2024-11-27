@@ -1,9 +1,9 @@
-package com.rumisystem.zaurus_launcher.Activity.MODULE;
+package com.rumisystem.zaurus_launcher.MODULE;
 
 import android.content.pm.PackageManager;
 
-import com.rumisystem.zaurus_launcher.Activity.TYPE.AppData;
-import com.rumisystem.zaurus_launcher.Activity.TYPE.INDEX_DATA;
+import com.rumisystem.zaurus_launcher.TYPE.AppData;
+import com.rumisystem.zaurus_launcher.TYPE.INDEX_DATA;
 
 import java.util.ArrayList;
 import java.util.List;

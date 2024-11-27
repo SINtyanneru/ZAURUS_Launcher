@@ -2,22 +2,20 @@ package com.rumisystem.zaurus_launcher.Activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.rumisystem.zaurus_launcher.Activity.MODULE.APP_GET;
-import com.rumisystem.zaurus_launcher.Activity.MODULE.AppGridAdapter;
-import com.rumisystem.zaurus_launcher.Activity.MODULE.INDEX_Manager;
-import com.rumisystem.zaurus_launcher.Activity.TYPE.AppData;
+import com.rumisystem.zaurus_launcher.MODULE.AppGridAdapter;
+import com.rumisystem.zaurus_launcher.MODULE.INDEX_Manager;
+import com.rumisystem.zaurus_launcher.TYPE.AppData;
 import com.rumisystem.zaurus_launcher.R;
 
 import java.util.ArrayList;
@@ -27,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 	private Context CONTEXT;
 	private List<AppData> APP_LIST = new ArrayList<>();
 	private PackageManager PKM;
+	private String INDEX_ID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +57,8 @@ public class MainActivity extends AppCompatActivity {
 			INDEX_DROPDOWN.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 				@Override
 				public void onItemSelected(AdapterView<?> ADAPTER_VIEW, View VIEW, int I, long L) {
-					String ID = INDEX_Manager.I_TO_ID(I);
-					if (ID != null) {
-						LOAD_INDEX(ID);
-					}
+					INDEX_ID = INDEX_Manager.I_TO_ID(I);
+					LOAD_INDEX();
 				}
 
 				@Override
@@ -69,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
 			});
 
 			//インデックスを開く
-			LOAD_INDEX(INDEX_Manager.GetFaastINDEX_ID());
+			INDEX_ID = INDEX_Manager.GetFaastINDEX_ID();
+			LOAD_INDEX();
 
 			//タップ時のイベント
 			GridView GRID_VIEW = findViewById(R.id.AppList);
@@ -83,16 +81,27 @@ public class MainActivity extends AppCompatActivity {
 					}
 				}
 			});
+
+			//インデックス編集ボタンクリック時
+			Button INDEX_EDIT_BTN = findViewById(R.id.index_edit_button);
+			INDEX_EDIT_BTN.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Intent INTENT = new Intent(CONTEXT, INDEX_EditActivity.class);
+					INTENT.putExtra("INDEX_ID", INDEX_ID);
+					startActivity(INTENT);
+				}
+			});
 		} catch (Exception EX) {
 			EX.printStackTrace();
 		}
 	}
 
-	private void LOAD_INDEX(String ID) {
+	private void LOAD_INDEX() {
 		GridView GRID_VIEW = findViewById(R.id.AppList);
 
 		//インデックスの中身を読み込んで変数に入れる
-		APP_LIST = INDEX_Manager.GetINDEX_CONTENTS(ID);
+		APP_LIST = INDEX_Manager.GetINDEX_CONTENTS(INDEX_ID);
 
 		//アプリ一覧を表示
 		AppGridAdapter ADAPTER = new AppGridAdapter(this, APP_LIST, PKM);
