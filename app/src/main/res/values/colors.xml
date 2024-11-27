@@ -9,8 +9,8 @@
 	<color name="white">#FFFFFFFF</color>
 	<color name="red">#FFF00000</color>
 	<color name="aqua">#00FFF7</color>
-	<color name="MAIN_COLOR">#B2B2B2</color>
-	<color name="SYSTEM_UI_BACKGROUND">#FFD34E</color>
+	<color name="HEADER_BACKGROUND_1">#B2B2B2</color>
+	<color name="HEADER_BACKGROUND_2">#CCCCCC</color>
+	<color name="BACKGROUND">#FFD34E</color>
 	<color name="APPLAY_BUTTON_COLOR">#55F1A1</color>
-	<color name="TEXT_BACKGROUND_COLOR">#1E47C1</color>
 </resources>

@@ -5,106 +5,43 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-
 	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_marginStart="0dp"
-		android:layout_marginEnd="0dp"
-		android:layout_marginBottom="0dp"
-		android:orientation="vertical"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent">
-
-		<!--ヘッダー-->
-		<FrameLayout
+			android:orientation="vertical"
 			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:layout_weight="1"
-			android:layout_marginStart="0dp"
-			android:layout_marginEnd="0dp"
-			android:layout_marginBottom="0dp"
-			android:background="@color/MAIN_COLOR">
-
-			<Spinner
-				android:id="@+id/SELECT_INDEX_DROPMENU"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:background="@android:drawable/btn_dropdown"
-				android:spinnerMode="dropdown"/>
-
-			<TextView
-				android:id="@+id/PHONE_NAME"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:gravity="right"
-				android:text="Android"
-				android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-		</FrameLayout>
-
-		<!--メイン-->
+			android:layout_height="match_parent"
+			tools:layout_editor_absoluteY="1dp"
+			tools:layout_editor_absoluteX="1dp">
+		<!--へっだー-->
 		<FrameLayout
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:layout_weight="9"
-			android:layout_marginStart="0dp"
-			android:layout_marginEnd="0dp"
-			android:layout_marginBottom="0dp">
-			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:layout_marginStart="1dp"
-				android:layout_marginEnd="1dp"
-				android:layout_marginBottom="1dp"
-				android:orientation="vertical">
-				<!--編集ボタン-->
-				<FrameLayout
-					android:layout_width="match_parent"
-					android:layout_height="0dp"
-					android:layout_weight="1">
-					<Button
-						android:id="@+id/EDIT_BUTTON"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:background="@color/APPLAY_BUTTON_COLOR"
-						android:textColor="@color/black"
-						android:text="編集" />
-				</FrameLayout>
-				<!--インデックス本体-->
-				<FrameLayout
-					android:layout_width="match_parent"
-					android:layout_height="0dp"
-					android:layout_weight="9">
-					<GridView
-						android:id="@+id/APP_LIST"
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:gravity="center"
-						android:horizontalSpacing="10dp"
-						android:numColumns="3"
-						android:stretchMode="columnWidth"
-						android:verticalSpacing="10dp" />
-				</FrameLayout>
-			</LinearLayout>
+				android:layout_weight="13"
+				android:background="@color/HEADER_BACKGROUND_1">
 		</FrameLayout>
-
-		<!--フッター-->
 		<FrameLayout
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:layout_weight="2"
-			android:background="@color/MAIN_COLOR"
-			android:layout_marginStart="0dp"
-			android:layout_marginEnd="0dp"
-			android:layout_marginBottom="0dp">
-
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_weight="13"
+				android:background="@color/HEADER_BACKGROUND_2">
+		</FrameLayout>
+		<!--アプリ一覧ー-->
+		<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_weight="5"
+				android:background="@color/white">
+		</FrameLayout>
+		<!--下ー-->
+		<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_weight="12"
+				android:background="@color/HEADER_BACKGROUND_1">
 			<TextView
-				android:id="@+id/textView3"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="多分此処にネットワークの設定が来る" />
+					android:text="書く内容が無いでござる"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/textView" />
 		</FrameLayout>
 	</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

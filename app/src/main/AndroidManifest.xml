@@ -27,14 +27,5 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".Activity.INDEX_EDIT_Activity"
-			android:label="edit">
-		</activity>
-		<activity android:name=".Activity.APP_ADMIN_Activity"
-			android:label="app_admin">
-		</activity>
-		<activity android:name=".Activity.INDEX_LIST_EDITOR_Activity"
-			android:label="index_list_editor">
-		</activity>
 	</application>
 </manifest>
