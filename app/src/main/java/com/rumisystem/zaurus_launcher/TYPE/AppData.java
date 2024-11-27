@@ -19,14 +19,17 @@ public class AppData {
 	}
 
 	public String GetPACKAGE_NAME() {
+		//a
 		return PACKAGE_NAME;
 	}
 
 	public String GetNAME() {
+		//a
 		return NAME;
 	}
 
 	public Drawable GetIMAGE() {
+		//a
 		return IMAGE;
 	}
 

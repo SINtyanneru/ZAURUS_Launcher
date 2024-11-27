@@ -34,10 +34,10 @@
 						android:layout_height="match_parent"
 						android:layout_weight="1" >
 					<Button
+							android:id="@+id/indexedit_setting_apply"
 							android:text="@string/SETTING_APPLY"
 							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:id="@+id/indexedit_setting_apply" />
+							android:layout_height="wrap_content" />
 				</FrameLayout>
 			</LinearLayout>
 		</FrameLayout>
@@ -46,18 +46,102 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:layout_weight="10">
+			<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@color/white">
+				<GridView
+						android:id="@+id/INDEX_AppList"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:numColumns="3"
+						android:verticalSpacing="10dp"
+						android:horizontalSpacing="10dp"
+						android:layout_gravity="center" />
+			</FrameLayout>
 		</FrameLayout>
 		<!--操作系統-->
 		<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:layout_weight="12">
+			<LinearLayout
+					android:orientation="vertical"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
+				<FrameLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_weight="1">
+					<LinearLayout
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent">
+						<!--移動系-->
+						<Button
+								android:text="↑"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content" />
+						<Button
+								android:text="↓"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content" />
+						<Button
+								android:text="←"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content" />
+						<Button
+								android:text="→"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content" />
+					</LinearLayout>
+				</FrameLayout>
+				<FrameLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_weight="1">
+					<!--追加系-->
+					<LinearLayout
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent">
+						<Spinner
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:layout_weight="1"
+								android:spinnerMode="dropdown"/>
+						<Button
+								android:text="追加"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:id="@+id/add_btn" />
+						<Button
+								android:text="隠す"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:id="@+id/remove_btn"/>
+					</LinearLayout>
+				</FrameLayout>
+			</LinearLayout>
 		</FrameLayout>
 		<!--アプリ一覧-->
 		<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:layout_weight="10">
+			<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@color/white">
+				<GridView
+						android:id="@+id/ALL_AppList"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:numColumns="3"
+						android:verticalSpacing="10dp"
+						android:horizontalSpacing="10dp"
+						android:layout_gravity="center" />
+			</FrameLayout>
 		</FrameLayout>
 	</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

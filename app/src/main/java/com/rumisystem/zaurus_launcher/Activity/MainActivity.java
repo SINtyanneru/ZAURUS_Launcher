@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 	private List<AppData> APP_LIST = new ArrayList<>();
 	private PackageManager PKM;
 	private String INDEX_ID;
+	public static String APP_DIR;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 			//変数初期化
 			CONTEXT = this;
 			PKM = this.getPackageManager();
+			APP_DIR = CONTEXT.getExternalFilesDir(null).getPath();
 
 			//初期化
 			INDEX_Manager.Init(PKM);
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 				android.R.layout.simple_spinner_dropdown_item,
 				INDEX_Manager.GetINDEX_LIST()
 			));
+
 			//選択時のイベント
 			INDEX_DROPDOWN.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 				@Override
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 					Intent INTENT = new Intent(CONTEXT, INDEX_EditActivity.class);
 					INTENT.putExtra("INDEX_ID", INDEX_ID);
 					startActivity(INTENT);
+					finish();
 				}
 			});
 		} catch (Exception EX) {
