@@ -70,6 +70,12 @@ public class INDEX_EditActivity extends AppCompatActivity {
 				//保存
 				INDEX_Manager.SAVE();
 
+				//メインアクティビティを開く
+				Intent INTENT = new Intent(CONTEXT, MainActivity.class);
+				startActivity(INTENT);
+				finish();
+
+				/*
 				//再起動
 				Intent INTENT = PKM.getLaunchIntentForPackage(CONTEXT.getPackageName());
 				if (INTENT != null) {
@@ -79,6 +85,7 @@ public class INDEX_EditActivity extends AppCompatActivity {
 
 				android.os.Process.killProcess(android.os.Process.myPid());
 				System.exit(0);
+				*/
 			}
 		});
 

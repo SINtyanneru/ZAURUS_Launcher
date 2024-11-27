@@ -25,6 +25,9 @@ public class INDEX_Manager {
 	private static List<INDEX_DATA> INDEX_LIST = new ArrayList<>();
 
 	public static void Init(PackageManager PKM) throws IOException, PackageManager.NameNotFoundException {
+		//変数初期化
+		INDEX_LIST = new ArrayList<>();
+
 		File INDEX_FILE = new File(APP_DIR, "INDEX.json");
 		if (INDEX_FILE.exists()) {
 			//インデックスファイルを読み込む
