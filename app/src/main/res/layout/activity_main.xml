@@ -15,13 +15,19 @@
 		<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:layout_weight="13"
+				android:layout_weight="14"
 				android:background="@color/HEADER_BACKGROUND_1">
+
+			<Spinner
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/index_dropdown"
+					android:spinnerMode="dropdown"/>
 		</FrameLayout>
 		<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:layout_weight="13"
+				android:layout_weight="14"
 				android:background="@color/HEADER_BACKGROUND_2">
 		</FrameLayout>
 		<!--アプリ一覧ー-->
@@ -30,6 +36,14 @@
 				android:layout_height="match_parent"
 				android:layout_weight="5"
 				android:background="@color/white">
+			<GridView
+					android:id="@+id/AppList"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:numColumns="3"
+					android:verticalSpacing="10dp"
+					android:horizontalSpacing="10dp"
+					android:layout_gravity="center"/>
 		</FrameLayout>
 		<!--下ー-->
 		<FrameLayout
