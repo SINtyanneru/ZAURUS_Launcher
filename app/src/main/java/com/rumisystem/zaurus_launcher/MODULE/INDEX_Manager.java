@@ -55,7 +55,7 @@ public class INDEX_Manager {
 			INDEX_FILE.createNewFile();
 			INDEX_LIST.add(new INDEX_DATA("home-1", "ホームインデックス-1", new ArrayList<>(), false));
 			INDEX_LIST.add(new INDEX_DATA("home-2", "ホームインデックス-2", new ArrayList<>(), false));
-			INDEX_LIST.add(new INDEX_DATA("home-2", "ソーシャルメディア", new ArrayList<>(), false));
+			INDEX_LIST.add(new INDEX_DATA("sns", "ソーシャルメディア", new ArrayList<>(), false));
 			INDEX_LIST.add(new INDEX_DATA("system_setting", "システム設定", new ArrayList<>(), false));
 			SAVE();
 		}
