@@ -2,6 +2,7 @@ package com.rumisystem.zaurus_launcher.MODULE;
 
 import static com.rumisystem.zaurus_launcher.Activity.MainActivity.APP_DIR;
 
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -24,7 +25,7 @@ import java.util.List;
 public class INDEX_Manager {
 	private static List<INDEX_DATA> INDEX_LIST = new ArrayList<>();
 
-	public static void Init(PackageManager PKM) throws IOException, PackageManager.NameNotFoundException {
+	public static void Init(PackageManager PKM, Context CONTEXT) throws IOException, PackageManager.NameNotFoundException {
 		//変数初期化
 		INDEX_LIST = new ArrayList<>();
 
@@ -56,7 +57,7 @@ public class INDEX_Manager {
 			SAVE();
 		}
 
-		INDEX_LIST.add(new INDEX_DATA("MORE", "MOREインデックス", APP_GET.GET(PKM), true));
+		INDEX_LIST.add(new INDEX_DATA("MORE", "MOREインデックス", APP_GET.GET(PKM, CONTEXT), true));
 	}
 
 	public static void SAVE() {

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 
+import com.rumisystem.zaurus_launcher.Activity.apk_admin;
+
 public class AppData {
 	private String PACKAGE_NAME;
 	private String NAME;
@@ -35,13 +37,27 @@ public class AppData {
 
 	public boolean Run(Context CONTEXT, PackageManager PKM) {
 		try {
-			//そもそもパッケージが有るか(なければエラー落ちする)
-			PKM.getApplicationInfo(PACKAGE_NAME, PackageManager.GET_ACTIVITIES);
+			if (!PACKAGE_NAME.startsWith("rumi_zaurus")) {
+				//そもそもパッケージが有るか(なければエラー落ちする)
+				PKM.getApplicationInfo(PACKAGE_NAME, PackageManager.GET_ACTIVITIES);
 
-			//起動
-			Intent LANCH_INTENT = PKM.getLaunchIntentForPackage(PACKAGE_NAME);
-			CONTEXT.startActivity(LANCH_INTENT);
-			return true;
+				//起動
+				Intent LANCH_INTENT = PKM.getLaunchIntentForPackage(PACKAGE_NAME);
+				CONTEXT.startActivity(LANCH_INTENT);
+				return true;
+			} else {
+				switch (PACKAGE_NAME) {
+					case "rumi_zaurus.apk_admin":{
+						Intent INTENT = new Intent(CONTEXT, apk_admin.class);
+						CONTEXT.startActivity(INTENT);
+						return true;
+					}
+
+					default:{
+						return true;
+					}
+				}
+			}
 		} catch (Exception EX) {
 			return false;
 		}

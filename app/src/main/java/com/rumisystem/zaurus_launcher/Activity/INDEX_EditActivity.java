@@ -139,7 +139,7 @@ public class INDEX_EditActivity extends AppCompatActivity {
 	private void LOAD_INDEX() {
 		//インデックスの中身を読み込んで変数に入れる
 		INDEX_APP_LIST = INDEX_Manager.GetINDEX_CONTENTS(INDEX_ID);
-		ALL_APP_LIST = APP_GET.GET(PKM);
+		ALL_APP_LIST = APP_GET.GET(PKM, CONTEXT);
 
 		VIEW_RIFLESH();
 	}

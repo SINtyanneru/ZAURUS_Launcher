@@ -37,7 +37,9 @@
 							android:id="@+id/indexedit_setting_apply"
 							android:text="@string/SETTING_APPLY"
 							android:layout_width="wrap_content"
-							android:layout_height="wrap_content" />
+							android:layout_height="wrap_content"
+							android:layout_gravity="right"
+							android:backgroundTint="@color/APPLAY_BUTTON_COLOR" />
 				</FrameLayout>
 			</LinearLayout>
 		</FrameLayout>
@@ -109,7 +111,8 @@
 								android:layout_width="match_parent"
 								android:layout_height="wrap_content"
 								android:layout_weight="1"
-								android:spinnerMode="dropdown"/>
+								android:spinnerMode="dropdown"
+								android:background="@drawable/dropdown_texture" />
 						<Button
 								android:text="追加"
 								android:layout_width="wrap_content"

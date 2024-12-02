@@ -28,9 +28,10 @@
 						android:layout_weight="1">
 					<Spinner
 							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
+							android:layout_height="match_parent"
 							android:id="@+id/index_dropdown"
-							android:spinnerMode="dropdown" />
+							android:spinnerMode="dropdown"
+							android:background="@drawable/dropdown_texture" />
 				</FrameLayout>
 				<!--なんかあれ-->
 				<FrameLayout
@@ -60,7 +61,9 @@
 						android:text="@string/INDEX_EDIT"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:id="@+id/index_edit_button" />
+						android:id="@+id/index_edit_button"
+						android:backgroundTint="@color/APPLAY_BUTTON_COLOR"
+						android:layout_gravity="right" />
 			</FrameLayout>
 		</FrameLayout>
 		<!--アプリ一覧ー-->

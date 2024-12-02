@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 			APP_DIR = CONTEXT.getExternalFilesDir(null).getPath();
 
 			//初期化
-			INDEX_Manager.Init(PKM);
+			INDEX_Manager.Init(PKM, CONTEXT);
 
 			//インデックス選択するやつ
 			Spinner INDEX_DROPDOWN = findViewById(R.id.index_dropdown);
