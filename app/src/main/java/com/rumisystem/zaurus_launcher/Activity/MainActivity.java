@@ -1,6 +1,8 @@
 package com.rumisystem.zaurus_launcher.Activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -82,6 +84,26 @@ public class MainActivity extends AppCompatActivity {
 					} catch (Exception EX) {
 						EX.printStackTrace();
 					}
+				}
+			});
+			GRID_VIEW.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+				@Override
+				public boolean onItemLongClick(AdapterView<?> ADAPTER_VIEW, View VIEW, int I, long L) {
+					StringBuilder SB = new StringBuilder();
+					SB.append("アプリ名：" + APP_LIST.get(I).GetNAME() + "\n");
+					SB.append("パッケージ名：" + APP_LIST.get(I).GetPACKAGE_NAME() + "\n");
+
+					AlertDialog.Builder DB = new AlertDialog.Builder(CONTEXT, R.style.CustomAlertDialog);
+					DB.setTitle("アプリ情報");
+					DB.setMessage(SB.toString());
+					DB.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							//そのまま閉じる
+						}
+					});
+					DB.show();
+					return true;
 				}
 			});
 

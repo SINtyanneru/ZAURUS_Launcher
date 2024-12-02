@@ -2,7 +2,9 @@ package com.rumisystem.zaurus_launcher.MODULE;
 
 import static com.rumisystem.zaurus_launcher.Activity.MainActivity.APP_DIR;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -53,6 +55,7 @@ public class INDEX_Manager {
 			INDEX_FILE.createNewFile();
 			INDEX_LIST.add(new INDEX_DATA("home-1", "ホームインデックス-1", new ArrayList<>(), false));
 			INDEX_LIST.add(new INDEX_DATA("home-2", "ホームインデックス-2", new ArrayList<>(), false));
+			INDEX_LIST.add(new INDEX_DATA("home-2", "ソーシャルメディア", new ArrayList<>(), false));
 			INDEX_LIST.add(new INDEX_DATA("system_setting", "システム設定", new ArrayList<>(), false));
 			SAVE();
 		}
