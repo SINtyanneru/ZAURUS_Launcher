@@ -17,6 +17,14 @@ public class APP_GET {
 	public static List<AppData> GET(PackageManager PKM, Context CONTEXT) {
 		List<AppData> APP_LIST = new ArrayList<>();
 
+		//APK管理
+		APP_LIST.add(new AppData(
+				"rumi_zaurus.apk_admin",
+				"APK管理",
+				31,
+				CONTEXT.getDrawable(R.drawable.apk_admin)
+		));
+
 		List<PackageInfo> PACKAGE_LIST = PKM.getInstalledPackages(0);
 		for (PackageInfo PKG_INFO:PACKAGE_LIST) {
 			ApplicationInfo APP = PKG_INFO.applicationInfo;
@@ -31,14 +39,6 @@ public class APP_GET {
 				));
 			}
 		}
-
-		//APK管理
-		APP_LIST.add(new AppData(
-			"rumi_zaurus.apk_admin",
-			"APK管理",
-			31,
-			CONTEXT.getDrawable(R.drawable.apk_admin)
-		));
 
 		return APP_LIST;
 	}

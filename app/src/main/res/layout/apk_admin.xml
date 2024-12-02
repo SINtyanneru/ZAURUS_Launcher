@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
-
+	<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			tools:layout_editor_absoluteY="1dp"
+			tools:layout_editor_absoluteX="1dp">
+		<!--操作パネル-->
+		<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_weight="7">
+			<LinearLayout
+					android:orientation="vertical"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
+				<FrameLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_weight="1">
+					<TextView
+							android:text="@string/APP_ADMIN.NAME"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:background="@color/TITLE_BACKGROUND"/>
+				</FrameLayout>
+				<FrameLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_weight="1">
+					<LinearLayout
+							android:orientation="horizontal"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent">
+						<FrameLayout
+								android:layout_width="match_parent"
+								android:layout_height="match_parent"
+								android:layout_weight="1">
+							<Button
+									android:text="@string/APP_ADMIN.TORU"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:id="@+id/remove_btn" />
+						</FrameLayout>
+						<FrameLayout
+								android:layout_width="match_parent"
+								android:layout_height="match_parent"
+								android:layout_weight="1">
+							<Button
+									android:text="@string/SETTING_CANCEL"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:id="@+id/exit_btn" />
+						</FrameLayout>
+					</LinearLayout>
+				</FrameLayout>
+			</LinearLayout>
+		</FrameLayout>
+		<!--アプリ一覧-->
+		<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_weight="1">
+			<GridView
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@color/white"
+					android:id="@+id/ALL_AppList"/>
+		</FrameLayout>
+	</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
