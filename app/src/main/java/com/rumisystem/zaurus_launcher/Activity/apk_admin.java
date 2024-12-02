@@ -69,16 +69,6 @@ public class apk_admin extends AppCompatActivity {
 					}
 				}
 			});
-
-			Button EXIT_BTN = findViewById(R.id.exit_btn);
-			EXIT_BTN.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					//メインアクティビティを開く
-					Intent INTENT = new Intent(CONTEXT, MainActivity.class);
-					startActivity(INTENT);
-				}
-			});
 		} catch (Exception EX) {
 			EX.printStackTrace();
 		}

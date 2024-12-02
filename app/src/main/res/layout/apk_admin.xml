@@ -46,16 +46,6 @@
 									android:layout_height="wrap_content"
 									android:id="@+id/remove_btn" />
 						</FrameLayout>
-						<FrameLayout
-								android:layout_width="match_parent"
-								android:layout_height="match_parent"
-								android:layout_weight="1">
-							<Button
-									android:text="@string/SETTING_CANCEL"
-									android:layout_width="wrap_content"
-									android:layout_height="wrap_content"
-									android:id="@+id/exit_btn" />
-						</FrameLayout>
 					</LinearLayout>
 				</FrameLayout>
 			</LinearLayout>
