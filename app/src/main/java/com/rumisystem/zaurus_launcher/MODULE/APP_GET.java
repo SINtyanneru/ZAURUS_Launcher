@@ -12,6 +12,7 @@ import com.rumisystem.zaurus_launcher.TYPE.AppData;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class APP_GET {
@@ -29,6 +30,13 @@ public class APP_GET {
 		System.out.println("アプリを全ロード中・・・");
 		long StartTime = System.nanoTime();
 		List<PackageInfo> PACKAGE_LIST = PKM.getInstalledPackages(0);
+
+		Collections.sort(PACKAGE_LIST, (P1, P2)->{
+			String Label1 = PKM.getApplicationLabel(P1.applicationInfo).toString();
+			String Label2 = PKM.getApplicationLabel(P2.applicationInfo).toString();
+			return Label1.compareToIgnoreCase(Label2);
+		});
+
 		for (PackageInfo PKG_INFO:PACKAGE_LIST) {
 			ApplicationInfo APP = PKG_INFO.applicationInfo;
 			Intent LANCH_INTENT = PKM.getLaunchIntentForPackage(PKG_INFO.packageName);

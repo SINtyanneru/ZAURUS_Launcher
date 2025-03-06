@@ -20,6 +20,7 @@ import com.rumisystem.zaurus_launcher.MODULE.INDEX_Manager;
 import com.rumisystem.zaurus_launcher.TYPE.AppData;
 import com.rumisystem.zaurus_launcher.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
 			CACHE_DIR = CONTEXT.getExternalCacheDir().getPath();
 
 			//初期化
-			INDEX_Manager.Init(PKM, CONTEXT);
-			System.out.println("初期化おｋ");
+			Init();
 
 			//インデックス選択するやつ
 			Spinner INDEX_DROPDOWN = findViewById(R.id.index_dropdown);
@@ -72,10 +72,6 @@ public class MainActivity extends AppCompatActivity {
 				@Override
 				public void onNothingSelected(AdapterView<?> PARENT) {}
 			});
-
-			//インデックスを開く
-			INDEX_ID = INDEX_Manager.GetFaastINDEX_ID();
-			LOAD_INDEX();
 
 			//タップ時のイベント
 			GridView GRID_VIEW = findViewById(R.id.AppList);
@@ -121,6 +117,19 @@ public class MainActivity extends AppCompatActivity {
 					finish();
 				}
 			});
+
+			//リロードボタンクリック
+			Button ReloadButton = findViewById(R.id.reload_button);
+			ReloadButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					try {
+						Init();
+					} catch (Exception EX) {
+						EX.printStackTrace();
+					}
+				}
+			});
 		} catch (Exception EX) {
 			EX.printStackTrace();
 		}
@@ -135,5 +144,14 @@ public class MainActivity extends AppCompatActivity {
 		//アプリ一覧を表示
 		AppGridAdapter ADAPTER = new AppGridAdapter(this, APP_LIST, PKM);
 		GRID_VIEW.setAdapter(ADAPTER);
+	}
+
+	private void Init() throws PackageManager.NameNotFoundException, IOException {
+		INDEX_Manager.Init(PKM, CONTEXT);
+		System.out.println("初期化おｋ");
+
+		//インデックスを開く
+		INDEX_ID = INDEX_Manager.GetFaastINDEX_ID();
+		LOAD_INDEX();
 	}
 }

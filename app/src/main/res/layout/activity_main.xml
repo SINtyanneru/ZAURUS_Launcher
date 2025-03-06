@@ -87,11 +87,11 @@
 				android:layout_height="match_parent"
 				android:layout_weight="12"
 				android:background="@color/HEADER_BACKGROUND_1">
-			<TextView
-					android:text="書く内容が無いでござる"
+			<Button
+					android:text="再読込"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:id="@+id/textView" />
+					android:id="@+id/reload_button" />
 		</FrameLayout>
 	</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
