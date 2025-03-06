@@ -35,8 +35,11 @@ public class INDEX_Manager {
 		if (INDEX_FILE.exists()) {
 			//インデックスファイルを読み込む
 			JsonNode LOAD_DATA = new ObjectMapper().readTree(INDEX_FILE);
+
+			System.out.println("インデックスファイルロードおｋ");
 			for (int I = 0;I < LOAD_DATA.size(); I++) {
 				JsonNode ROW = LOAD_DATA.get(I);
+				System.out.println("インデックスの読み込み:" + ROW.get("ID").asText());
 
 				//コンテンツをセット
 				List<AppData> CONTENTS = new ArrayList<>();
@@ -45,6 +48,8 @@ public class INDEX_Manager {
 					PackageInfo PKG = PKM.getPackageInfo(PKG_NAME, 0);
 					ApplicationInfo APP = PKG.applicationInfo;
 					CONTENTS.add(new AppData(PKG_NAME, PKM.getApplicationLabel(APP).toString(), APP.targetSdkVersion, PKM.getApplicationIcon(APP)));
+
+					System.out.println("コンテンツ:" + APP.packageName);
 				}
 
 				//追加
@@ -60,7 +65,9 @@ public class INDEX_Manager {
 			SAVE();
 		}
 
+		System.out.println("MOREインデックス初期化中・・・");
 		INDEX_LIST.add(new INDEX_DATA("MORE", "MOREインデックス", APP_GET.GET(PKM, CONTEXT), true));
+		System.out.println("MOREインデックスを初期化した！");
 	}
 
 	public static void SAVE() {

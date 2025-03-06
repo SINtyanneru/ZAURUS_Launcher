@@ -17,6 +17,7 @@ import com.rumisystem.zaurus_launcher.MODULE.INDEX_Manager;
 import com.rumisystem.zaurus_launcher.R;
 import com.rumisystem.zaurus_launcher.TYPE.AppData;
 
+import java.io.IOException;
 import java.util.List;
 
 public class INDEX_EditActivity extends AppCompatActivity {
@@ -74,18 +75,6 @@ public class INDEX_EditActivity extends AppCompatActivity {
 				Intent INTENT = new Intent(CONTEXT, MainActivity.class);
 				startActivity(INTENT);
 				finish();
-
-				/*
-				//再起動
-				Intent INTENT = PKM.getLaunchIntentForPackage(CONTEXT.getPackageName());
-				if (INTENT != null) {
-					INTENT.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-					startActivity(INTENT);
-				}
-
-				android.os.Process.killProcess(android.os.Process.myPid());
-				System.exit(0);
-				*/
 			}
 		});
 
@@ -136,7 +125,7 @@ public class INDEX_EditActivity extends AppCompatActivity {
 		});
 	}
 
-	private void LOAD_INDEX() {
+	private void LOAD_INDEX() throws IOException {
 		//インデックスの中身を読み込んで変数に入れる
 		INDEX_APP_LIST = INDEX_Manager.GetINDEX_CONTENTS(INDEX_ID);
 		ALL_APP_LIST = APP_GET.GET(PKM, CONTEXT);

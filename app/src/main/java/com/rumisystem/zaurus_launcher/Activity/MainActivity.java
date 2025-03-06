@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 	private PackageManager PKM;
 	private String INDEX_ID;
 	public static String APP_DIR;
+	public static String CACHE_DIR;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +46,11 @@ public class MainActivity extends AppCompatActivity {
 			CONTEXT = this;
 			PKM = this.getPackageManager();
 			APP_DIR = CONTEXT.getExternalFilesDir(null).getPath();
+			CACHE_DIR = CONTEXT.getExternalCacheDir().getPath();
 
 			//初期化
 			INDEX_Manager.Init(PKM, CONTEXT);
+			System.out.println("初期化おｋ");
 
 			//インデックス選択するやつ
 			Spinner INDEX_DROPDOWN = findViewById(R.id.index_dropdown);

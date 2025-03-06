@@ -60,12 +60,16 @@ public class apk_admin extends AppCompatActivity {
 			REMOVE_BTN.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					if (APP_LIST.get(SELECT) != null) {
-						Intent LANCH_INTENT = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
-						LANCH_INTENT.setData(Uri.parse("package:" + APP_LIST.get(SELECT).GetPACKAGE_NAME()));
-						startActivity(LANCH_INTENT);
+					try {
+						if (APP_LIST.get(SELECT) != null) {
+							Intent LANCH_INTENT = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+							LANCH_INTENT.setData(Uri.parse("package:" + APP_LIST.get(SELECT).GetPACKAGE_NAME()));
+							startActivity(LANCH_INTENT);
 
-						APP_LIST = APP_GET.GET(CONTEXT.getPackageManager(), CONTEXT);
+							APP_LIST = APP_GET.GET(CONTEXT.getPackageManager(), CONTEXT);
+						}
+					} catch (Exception EX) {
+						EX.printStackTrace();
 					}
 				}
 			});
