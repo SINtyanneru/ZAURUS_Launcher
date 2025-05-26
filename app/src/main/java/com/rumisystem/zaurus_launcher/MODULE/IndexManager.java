@@ -2,9 +2,7 @@ package com.rumisystem.zaurus_launcher.MODULE;
 
 import static com.rumisystem.zaurus_launcher.Activity.MainActivity.APP_DIR;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -12,20 +10,18 @@ import android.content.pm.PackageManager;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rumisystem.zaurus_launcher.TYPE.AppData;
-import com.rumisystem.zaurus_launcher.TYPE.INDEX_DATA;
+import com.rumisystem.zaurus_launcher.TYPE.IndexData;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class INDEX_Manager {
-	private static List<INDEX_DATA> INDEX_LIST = new ArrayList<>();
+public class IndexManager {
+	private static List<IndexData> INDEX_LIST = new ArrayList<>();
 
 	public static void Init(PackageManager PKM, Context CONTEXT) throws IOException, PackageManager.NameNotFoundException {
 		//変数初期化
@@ -53,27 +49,27 @@ public class INDEX_Manager {
 				}
 
 				//追加
-				INDEX_LIST.add(new INDEX_DATA(ROW.get("ID").asText(), ROW.get("NAME").asText(), CONTENTS, ROW.get("LOCK").asBoolean()));
+				INDEX_LIST.add(new IndexData(ROW.get("ID").asText(), ROW.get("NAME").asText(), CONTENTS, ROW.get("LOCK").asBoolean()));
 			}
 		} else {
 			//インデックスファイルを新規作成
 			INDEX_FILE.createNewFile();
-			INDEX_LIST.add(new INDEX_DATA("home-1", "ホームインデックス-1", new ArrayList<>(), false));
-			INDEX_LIST.add(new INDEX_DATA("home-2", "ホームインデックス-2", new ArrayList<>(), false));
-			INDEX_LIST.add(new INDEX_DATA("sns", "ソーシャルメディア", new ArrayList<>(), false));
-			INDEX_LIST.add(new INDEX_DATA("system_setting", "システム設定", new ArrayList<>(), false));
+			INDEX_LIST.add(new IndexData("home-1", "ホームインデックス-1", new ArrayList<>(), false));
+			INDEX_LIST.add(new IndexData("home-2", "ホームインデックス-2", new ArrayList<>(), false));
+			INDEX_LIST.add(new IndexData("sns", "ソーシャルメディア", new ArrayList<>(), false));
+			INDEX_LIST.add(new IndexData("system_setting", "システム設定", new ArrayList<>(), false));
 			SAVE();
 		}
 
 		System.out.println("MOREインデックス初期化中・・・");
-		INDEX_LIST.add(new INDEX_DATA("MORE", "MOREインデックス", APP_GET.GET(PKM, CONTEXT), true));
+		INDEX_LIST.add(new IndexData("MORE", "MOREインデックス", AppGet.GET(PKM, CONTEXT), true));
 		System.out.println("MOREインデックスを初期化した！");
 	}
 
 	public static void SAVE() {
 		try {
 			List<LinkedHashMap<String, Object>> DATA_LIST = new ArrayList<>();
-			for (INDEX_DATA ROW:INDEX_LIST) {
+			for (IndexData ROW:INDEX_LIST) {
 				//例外なやつは保存しない
 				if (!ROW.ID.equals("MORE")) {
 					LinkedHashMap<String, Object> INDEX = new LinkedHashMap<>();
@@ -111,7 +107,7 @@ public class INDEX_Manager {
 	 */
 	public static List<String> GetINDEX_LIST() {
 		List<String> RETURN = new ArrayList<>();
-		for (INDEX_DATA ROW:INDEX_LIST) {
+		for (IndexData ROW:INDEX_LIST) {
 			RETURN.add(ROW.NAME);
 		}
 		return RETURN;
@@ -140,7 +136,7 @@ public class INDEX_Manager {
 	 * @return
 	 */
 	public static List<AppData> GetINDEX_CONTENTS(String ID) {
-		for (INDEX_DATA ROW:INDEX_LIST) {
+		for (IndexData ROW:INDEX_LIST) {
 			if (ROW.ID.equals(ID)) {
 				return ROW.CONTENTS;
 			}

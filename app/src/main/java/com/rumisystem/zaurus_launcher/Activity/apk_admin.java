@@ -2,7 +2,6 @@ package com.rumisystem.zaurus_launcher.Activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -10,14 +9,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.rumisystem.zaurus_launcher.MODULE.APP_GET;
-import com.rumisystem.zaurus_launcher.MODULE.AppGridAdapter;
+import com.rumisystem.zaurus_launcher.MODULE.AppGet;
 import com.rumisystem.zaurus_launcher.R;
 import com.rumisystem.zaurus_launcher.TYPE.AppData;
 
@@ -42,7 +37,7 @@ public class apk_admin extends AppCompatActivity {
 
 			//変数初期化
 			CONTEXT = this;
-			APP_LIST = APP_GET.GET(this.getPackageManager(), CONTEXT);
+			APP_LIST = AppGet.GET(this.getPackageManager(), CONTEXT);
 
 			REFLESH();
 
@@ -66,7 +61,7 @@ public class apk_admin extends AppCompatActivity {
 							LANCH_INTENT.setData(Uri.parse("package:" + APP_LIST.get(SELECT).GetPACKAGE_NAME()));
 							startActivity(LANCH_INTENT);
 
-							APP_LIST = APP_GET.GET(CONTEXT.getPackageManager(), CONTEXT);
+							APP_LIST = AppGet.GET(CONTEXT.getPackageManager(), CONTEXT);
 						}
 					} catch (Exception EX) {
 						EX.printStackTrace();

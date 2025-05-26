@@ -11,9 +11,9 @@ import android.widget.GridView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.rumisystem.zaurus_launcher.MODULE.APP_GET;
+import com.rumisystem.zaurus_launcher.MODULE.AppGet;
 import com.rumisystem.zaurus_launcher.MODULE.AppGridAdapter;
-import com.rumisystem.zaurus_launcher.MODULE.INDEX_Manager;
+import com.rumisystem.zaurus_launcher.MODULE.IndexManager;
 import com.rumisystem.zaurus_launcher.R;
 import com.rumisystem.zaurus_launcher.TYPE.AppData;
 
@@ -51,7 +51,7 @@ public class INDEX_EditActivity extends AppCompatActivity {
 				INDEX_ID = EDIT_INTENT.getStringExtra("INDEX_ID");
 			} else {
 				//最初のインデックスのIDを入れる
-				INDEX_ID = INDEX_Manager.GetFaastINDEX_ID();
+				INDEX_ID = IndexManager.GetFaastINDEX_ID();
 			}
 
 			//読み込み
@@ -69,7 +69,7 @@ public class INDEX_EditActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				//保存
-				INDEX_Manager.SAVE();
+				IndexManager.SAVE();
 
 				//メインアクティビティを開く
 				Intent INTENT = new Intent(CONTEXT, MainActivity.class);
@@ -127,8 +127,8 @@ public class INDEX_EditActivity extends AppCompatActivity {
 
 	private void LOAD_INDEX() throws IOException {
 		//インデックスの中身を読み込んで変数に入れる
-		INDEX_APP_LIST = INDEX_Manager.GetINDEX_CONTENTS(INDEX_ID);
-		ALL_APP_LIST = APP_GET.GET(PKM, CONTEXT);
+		INDEX_APP_LIST = IndexManager.GetINDEX_CONTENTS(INDEX_ID);
+		ALL_APP_LIST = AppGet.GET(PKM, CONTEXT);
 
 		VIEW_RIFLESH();
 	}

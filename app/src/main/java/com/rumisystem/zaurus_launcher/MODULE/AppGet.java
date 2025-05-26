@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 
 import com.rumisystem.zaurus_launcher.R;
 import com.rumisystem.zaurus_launcher.TYPE.AppData;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class APP_GET {
+public class AppGet {
 	public static List<AppData> GET(PackageManager PKM, Context CONTEXT) throws IOException {
 		List<AppData> APP_LIST = new ArrayList<>();
 

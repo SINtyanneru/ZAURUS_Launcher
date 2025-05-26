@@ -16,7 +16,7 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rumisystem.zaurus_launcher.MODULE.AppGridAdapter;
-import com.rumisystem.zaurus_launcher.MODULE.INDEX_Manager;
+import com.rumisystem.zaurus_launcher.MODULE.IndexManager;
 import com.rumisystem.zaurus_launcher.TYPE.AppData;
 import com.rumisystem.zaurus_launcher.R;
 
@@ -58,14 +58,14 @@ public class MainActivity extends AppCompatActivity {
 			INDEX_DROPDOWN.setAdapter(new ArrayAdapter<>(
 				this,
 				android.R.layout.simple_spinner_dropdown_item,
-				INDEX_Manager.GetINDEX_LIST()
+				IndexManager.GetINDEX_LIST()
 			));
 
 			//選択時のイベント
 			INDEX_DROPDOWN.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 				@Override
 				public void onItemSelected(AdapterView<?> ADAPTER_VIEW, View VIEW, int I, long L) {
-					INDEX_ID = INDEX_Manager.I_TO_ID(I);
+					INDEX_ID = IndexManager.I_TO_ID(I);
 					LOAD_INDEX();
 				}
 
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 		GridView GRID_VIEW = findViewById(R.id.AppList);
 
 		//インデックスの中身を読み込んで変数に入れる
-		APP_LIST = INDEX_Manager.GetINDEX_CONTENTS(INDEX_ID);
+		APP_LIST = IndexManager.GetINDEX_CONTENTS(INDEX_ID);
 
 		//アプリ一覧を表示
 		AppGridAdapter ADAPTER = new AppGridAdapter(this, APP_LIST, PKM);
@@ -147,11 +147,11 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void Init() throws PackageManager.NameNotFoundException, IOException {
-		INDEX_Manager.Init(PKM, CONTEXT);
+		IndexManager.Init(PKM, CONTEXT);
 		System.out.println("初期化おｋ");
 
 		//インデックスを開く
-		INDEX_ID = INDEX_Manager.GetFaastINDEX_ID();
+		INDEX_ID = IndexManager.GetFaastINDEX_ID();
 		LOAD_INDEX();
 	}
 }
