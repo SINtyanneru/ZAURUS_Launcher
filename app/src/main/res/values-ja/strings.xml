@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">ザウルスランチャー</string>
-	<string name="NOW_LOADING">しばらくお待ちください...</string>
+	<string name="NOW_LOADING">お待ちください</string>
 	<string name="INDEX_EDITOR.TITLE">ｲﾝﾃﾞｯｸｽ項目の編集</string>
 	<string name="SETTING_APPLY">設定</string>
 	<string name="INDEX_EDITOR.ADD">ｲﾝﾃﾞｯｸｽに追加</string>
 	<string name="INDEX_EDITOR.RM">ｲﾝﾃﾞｯｸｽから削除</string>
 	<string name="INDEX_LIST_EDITOR.TITLE">ｲﾝﾃﾞｯｸｽの設定</string>
     <string name="APP_ADMIN.NAME">APK管理</string>
-    <string name="APP_ADMIN.TORU">取る</string>
+    <string name="APP_ADMIN.TORU">削除</string>
 	<string name="INDEX_EDIT">編集</string>
 	<string name="SETTING_CANCEL">中止</string>
 </resources>
