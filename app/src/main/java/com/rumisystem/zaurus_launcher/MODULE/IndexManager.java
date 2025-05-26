@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rumisystem.zaurus_launcher.TYPE.AppData;
@@ -17,15 +18,16 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class IndexManager {
-	private static List<IndexData> INDEX_LIST = new ArrayList<>();
+	private static List<IndexData> IndexList = new ArrayList<>();
 
 	public static void Init(PackageManager PKM, Context CONTEXT) throws IOException, PackageManager.NameNotFoundException {
-		//変数初期化
-		INDEX_LIST = new ArrayList<>();
+		IndexList = new ArrayList<>();
 
 		File INDEX_FILE = new File(APP_DIR, "INDEX.json");
 		if (INDEX_FILE.exists()) {
@@ -34,71 +36,61 @@ public class IndexManager {
 
 			System.out.println("インデックスファイルロードおｋ");
 			for (int I = 0;I < LOAD_DATA.size(); I++) {
-				JsonNode ROW = LOAD_DATA.get(I);
-				System.out.println("インデックスの読み込み:" + ROW.get("ID").asText());
-
-				//コンテンツをセット
-				List<AppData> CONTENTS = new ArrayList<>();
-				for (int I2 = 0;I2 < ROW.get("CONTENTS").size(); I2++) {
-					String PKG_NAME = ROW.get("CONTENTS").get(I2).asText();
-					PackageInfo PKG = PKM.getPackageInfo(PKG_NAME, 0);
-					ApplicationInfo APP = PKG.applicationInfo;
-					CONTENTS.add(new AppData(PKG_NAME, PKM.getApplicationLabel(APP).toString(), APP.targetSdkVersion, PKM.getApplicationIcon(APP)));
-
-					System.out.println("コンテンツ:" + APP.packageName);
-				}
-
 				//追加
-				INDEX_LIST.add(new IndexData(ROW.get("ID").asText(), ROW.get("NAME").asText(), CONTENTS, ROW.get("LOCK").asBoolean()));
+				IndexList.add(new IndexData(LOAD_DATA.get(I)));
 			}
+
+			IndexList.add(new IndexData("MORE", "MOREインデックス", true, new ArrayList<>()));
 		} else {
 			//インデックスファイルを新規作成
 			INDEX_FILE.createNewFile();
-			INDEX_LIST.add(new IndexData("home-1", "ホームインデックス-1", new ArrayList<>(), false));
-			INDEX_LIST.add(new IndexData("home-2", "ホームインデックス-2", new ArrayList<>(), false));
-			INDEX_LIST.add(new IndexData("sns", "ソーシャルメディア", new ArrayList<>(), false));
-			INDEX_LIST.add(new IndexData("system_setting", "システム設定", new ArrayList<>(), false));
-			SAVE();
+			NEW("ホームインデックス-1");
+			NEW("ホームインデックス-2");
+			NEW("ソーシャルメディア");
+			NEW("システム設定");
 		}
-
-		System.out.println("MOREインデックス初期化中・・・");
-		INDEX_LIST.add(new IndexData("MORE", "MOREインデックス", AppGet.GET(PKM, CONTEXT), true));
-		System.out.println("MOREインデックスを初期化した！");
 	}
 
-	public static void SAVE() {
-		try {
-			List<LinkedHashMap<String, Object>> DATA_LIST = new ArrayList<>();
-			for (IndexData ROW:INDEX_LIST) {
-				//例外なやつは保存しない
-				if (!ROW.ID.equals("MORE")) {
-					LinkedHashMap<String, Object> INDEX = new LinkedHashMap<>();
-
-					//情報
-					INDEX.put("ID", ROW.ID);
-					INDEX.put("NAME", ROW.NAME);
-					INDEX.put("LOCK", ROW.LOCK);
-
-					//内容
-					List<String> CONTENTS = new ArrayList<>();
-					for (AppData APP:ROW.CONTENTS) {
-						CONTENTS.add(APP.GetPACKAGE_NAME());
-					}
-					INDEX.put("CONTENTS", CONTENTS);
-
-					DATA_LIST.add(INDEX);
-				}
-			}
-
-			//JSON化して書き出し
-			String SAVE_DATA = new ObjectMapper().writeValueAsString(DATA_LIST);
-			BufferedWriter BW = new BufferedWriter(new FileWriter(new File(APP_DIR, "INDEX.json")));
-			BW.write(SAVE_DATA);
-			BW.flush();
-			BW.close();
-		} catch (Exception EX) {
-			EX.printStackTrace();
+	public static void NEW(String NAME) throws IOException {
+		File IndexFile = new File(APP_DIR, "INDEX.json");
+		JsonNode LoadData = new ObjectMapper().readTree(IndexFile);
+		List<LinkedHashMap<String, Object>> SaveData = new ArrayList<>();
+		for (int I = 0; I < LoadData.size(); I++) {
+			SaveData.add(new IndexData(LoadData.get(I)).toHM());
 		}
+
+		//追加
+		SaveData.add(new IndexData(UUID.randomUUID().toString(), NAME, false, new ArrayList<>()).toHM());
+
+		SaveFile(SaveData);
+	}
+
+	public static void SAVE(String ID, List<String> ContentList) throws IOException {
+		File IndexFile = new File(APP_DIR, "INDEX.json");
+		JsonNode LoadData = new ObjectMapper().readTree(IndexFile);
+		List<LinkedHashMap<String, Object>> SaveData = new ArrayList<>();
+		for (int I = 0; I < LoadData.size(); I++) {
+			if (LoadData.get(I).get("ID").asText().equals(ID)) {
+				//編集対象
+				LinkedHashMap<String, Object> D = new IndexData(LoadData.get(I)).toHM();
+				D.put("CONTENTS", ContentList);
+				SaveData.add(D);
+			} else {
+				//編集対象ではない
+				SaveData.add(new IndexData(LoadData.get(I)).toHM());
+			}
+		}
+
+		SaveFile(SaveData);
+	}
+
+	private static void SaveFile(List<LinkedHashMap<String, Object>> SaveData) throws IOException {
+		//JSON化して書き出し
+		String SAVE_DATA = new ObjectMapper().writeValueAsString(SaveData);
+		BufferedWriter BW = new BufferedWriter(new FileWriter(new File(APP_DIR, "INDEX.json")));
+		BW.write(SAVE_DATA);
+		BW.flush();
+		BW.close();
 	}
 
 	/**
@@ -107,7 +99,7 @@ public class IndexManager {
 	 */
 	public static List<String> GetINDEX_LIST() {
 		List<String> RETURN = new ArrayList<>();
-		for (IndexData ROW:INDEX_LIST) {
+		for (IndexData ROW:IndexList) {
 			RETURN.add(ROW.NAME);
 		}
 		return RETURN;
@@ -118,7 +110,7 @@ public class IndexManager {
 	 * @return
 	 */
 	public static String GetFaastINDEX_ID() {
-		return INDEX_LIST.get(0).ID;
+		return IndexList.get(0).ID;
 	}
 
 	/**
@@ -127,7 +119,7 @@ public class IndexManager {
 	 * @return
 	 */
 	public static String I_TO_ID(int I) {
-		return INDEX_LIST.get(I).ID;
+		return IndexList.get(I).ID;
 	}
 
 	/**
@@ -135,13 +127,34 @@ public class IndexManager {
 	 * @param ID
 	 * @return
 	 */
-	public static List<AppData> GetINDEX_CONTENTS(String ID) {
-		for (IndexData ROW:INDEX_LIST) {
-			if (ROW.ID.equals(ID)) {
-				return ROW.CONTENTS;
+	public static List<AppData> GetINDEX_CONTENTS(String ID, PackageManager PKM, Context CONTEXT) throws IOException, PackageManager.NameNotFoundException {
+		switch (ID) {
+			case "MORE": {
+				return AppGet.GET(PKM, CONTEXT);
+			}
+
+			default: {
+				//取得
+				File IndexFile = new File(APP_DIR, "INDEX.json");		//←Initでファイル作ってるから消失しているわけがない
+				JsonNode LoadData = new ObjectMapper().readTree(IndexFile);
+				for (int I = 0; I < LoadData.size(); I++) {
+					JsonNode Row = LoadData.get(I);
+					if (Row.get("ID").asText().equals(ID)) {
+						List<AppData> CONTENTS = new ArrayList<>();
+						for (int I2 = 0;I2 < Row.get("CONTENTS").size(); I2++) {
+							String PKG_NAME = Row.get("CONTENTS").get(I2).asText();
+							PackageInfo PKG = PKM.getPackageInfo(PKG_NAME, 0);
+							ApplicationInfo APP = PKG.applicationInfo;
+							CONTENTS.add(new AppData(PKG_NAME, PKM.getApplicationLabel(APP).toString(), APP.targetSdkVersion, PKM.getApplicationIcon(APP)));
+
+							System.out.println("コンテンツ:" + APP.packageName);
+						}
+						return CONTENTS;
+					}
+				}
+
+				return null;
 			}
 		}
-
-		return null;
 	}
 }

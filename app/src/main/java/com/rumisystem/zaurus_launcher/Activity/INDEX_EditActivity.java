@@ -18,6 +18,7 @@ import com.rumisystem.zaurus_launcher.R;
 import com.rumisystem.zaurus_launcher.TYPE.AppData;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class INDEX_EditActivity extends AppCompatActivity {
@@ -68,13 +69,21 @@ public class INDEX_EditActivity extends AppCompatActivity {
 		APPLY_BTN.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				//保存
-				IndexManager.SAVE();
+				try {
+					//保存
+					List<String> SaveData = new ArrayList<>();
+					for (AppData A:INDEX_APP_LIST) {
+						SaveData.add(A.GetPACKAGE_NAME());
+					}
+					IndexManager.SAVE(INDEX_ID, SaveData);
 
-				//メインアクティビティを開く
-				Intent INTENT = new Intent(CONTEXT, MainActivity.class);
-				startActivity(INTENT);
-				finish();
+					//メインアクティビティを開く
+					Intent INTENT = new Intent(CONTEXT, MainActivity.class);
+					startActivity(INTENT);
+					finish();
+				} catch (Exception EX) {
+					EX.printStackTrace();
+				}
 			}
 		});
 
@@ -126,11 +135,15 @@ public class INDEX_EditActivity extends AppCompatActivity {
 	}
 
 	private void LOAD_INDEX() throws IOException {
-		//インデックスの中身を読み込んで変数に入れる
-		INDEX_APP_LIST = IndexManager.GetINDEX_CONTENTS(INDEX_ID);
-		ALL_APP_LIST = AppGet.GET(PKM, CONTEXT);
+		try {
+			//インデックスの中身を読み込んで変数に入れる
+			INDEX_APP_LIST = IndexManager.GetINDEX_CONTENTS(INDEX_ID, PKM, CONTEXT);
+			ALL_APP_LIST = AppGet.GET(PKM, CONTEXT);
 
-		VIEW_RIFLESH();
+			VIEW_RIFLESH();
+		} catch (Exception EX) {
+			EX.printStackTrace();
+		}
 	}
 
 	private void VIEW_RIFLESH() {

@@ -136,14 +136,18 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void LOAD_INDEX() {
-		GridView GRID_VIEW = findViewById(R.id.AppList);
+		try {
+			GridView GRID_VIEW = findViewById(R.id.AppList);
 
-		//インデックスの中身を読み込んで変数に入れる
-		APP_LIST = IndexManager.GetINDEX_CONTENTS(INDEX_ID);
+			//インデックスの中身を読み込んで変数に入れる
+			APP_LIST = IndexManager.GetINDEX_CONTENTS(INDEX_ID, PKM, CONTEXT);
 
-		//アプリ一覧を表示
-		AppGridAdapter ADAPTER = new AppGridAdapter(this, APP_LIST, PKM);
-		GRID_VIEW.setAdapter(ADAPTER);
+			//アプリ一覧を表示
+			AppGridAdapter ADAPTER = new AppGridAdapter(this, APP_LIST, PKM);
+			GRID_VIEW.setAdapter(ADAPTER);
+		} catch (Exception EX) {
+			EX.printStackTrace();
+		}
 	}
 
 	private void Init() throws PackageManager.NameNotFoundException, IOException {
