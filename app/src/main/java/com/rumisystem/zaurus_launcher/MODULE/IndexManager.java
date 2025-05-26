@@ -120,6 +120,16 @@ public class IndexManager {
 		return IndexList.get(I).ID;
 	}
 
+	public static boolean isLock(String ID) {
+		for (IndexData D:IndexList) {
+			if (D.ID.equals(ID)) {
+				return D.LOCK;
+			}
+		}
+
+		return true;
+	}
+
 	/**
 	 * インデックスのIDから中身を取得する
 	 * @param ID

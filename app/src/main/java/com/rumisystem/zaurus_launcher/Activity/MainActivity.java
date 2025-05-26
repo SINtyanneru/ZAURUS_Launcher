@@ -139,6 +139,15 @@ public class MainActivity extends AppCompatActivity {
 		try {
 			GridView GRID_VIEW = findViewById(R.id.AppList);
 
+			//ロック済みなら編集できなくする
+			if (IndexManager.isLock(INDEX_ID)) {
+				Button EditButton = findViewById(R.id.index_edit_button);
+				EditButton.setEnabled(false);
+			} else {
+				Button EditButton = findViewById(R.id.index_edit_button);
+				EditButton.setEnabled(true);
+			}
+
 			//インデックスの中身を読み込んで変数に入れる
 			APP_LIST = IndexManager.GetINDEX_CONTENTS(INDEX_ID, PKM, CONTEXT);
 
