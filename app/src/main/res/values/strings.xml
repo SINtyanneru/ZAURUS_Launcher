@@ -11,4 +11,6 @@
     <string name="APP_ADMIN.TORU">削除</string>
 	<string name="INDEX_EDIT">編集</string>
 	<string name="SETTING_CANCEL">中止</string>
+	<string name="ZAURUS">Zaurus</string>
+	<string name="ZAURUS_CC1">ENTERTAINMENT\n&amp;COMMUNICATION</string>
 </resources>

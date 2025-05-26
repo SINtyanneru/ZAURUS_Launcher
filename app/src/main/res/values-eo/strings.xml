@@ -10,4 +10,6 @@
     <string name="APP_ADMIN.NAME">APK APP</string>
     <string name="APP_ADMIN.TORU">Forigi APK</string>
 	<string name="INDEX_EDIT">Redaktado</string>
+	<string name="ZAURUS">Zaurus</string>
+	<string name="ZAURUS_CC1">ENTERTAINMENT\n&amp;COMMUNICATION</string>
 </resources>

@@ -14,9 +14,12 @@
 		<!--へっだー-->
 		<FrameLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout_weight="14"
-				android:background="@color/HEADER_BACKGROUND_1">
+				android:layout_height="40dp"
+				android:background="@color/HEADER_BACKGROUND_1"
+				android:paddingTop="5dp"
+				android:paddingBottom="5dp"
+				android:paddingLeft="10dp"
+				android:paddingRight="10dp" >
 			<LinearLayout
 					android:orientation="horizontal"
 					android:layout_width="match_parent"
@@ -39,21 +42,33 @@
 						android:layout_height="match_parent"
 						android:layout_weight="2">
 					<TextView
-							android:text="ZAURUS"
-							android:textSize="90px"
-							android:layout_width="wrap_content"
+							android:text="@string/ZAURUS"
+							android:textSize="20sp"
+							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:id="@+id/textView2" />
+							android:id="@+id/textView2"
+							android:gravity="end
+" />
 				</FrameLayout>
 			</LinearLayout>
 		</FrameLayout>
 		<!--編集とかを表示する部分-->
 		<FrameLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout_weight="14"
+				android:layout_height="40dp"
 				android:background="@color/HEADER_BACKGROUND_2"
-				android:paddingLeft="250dp">
+				android:paddingLeft="10dp"
+				android:paddingRight="10dp">
+			<FrameLayout
+					android:layout_width="180dp"
+					android:layout_height="match_parent">
+				<TextView
+						android:text="@string/ZAURUS_CC1"
+						android:textSize="15sp"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:id="@+id/textView3" />
+			</FrameLayout>
 			<FrameLayout
 					android:layout_width="match_parent"
 					android:layout_height="match_parent">
@@ -84,8 +99,7 @@
 		<!--下ー-->
 		<FrameLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout_weight="12"
+				android:layout_height="100dp"
 				android:background="@color/HEADER_BACKGROUND_1">
 			<Button
 					android:text="再読込"
