@@ -1,9 +1,11 @@
 package com.rumisystem.zaurus_launcher.Activity;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +34,35 @@ public class MainActivity extends AppCompatActivity {
 	private String INDEX_ID;
 	public static String APP_DIR;
 	public static String CACHE_DIR;
+	private final BroadcastReceiver Receive = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context CTX, Intent IT) {
+			String Action = IT.getAction();
+			switch (Action) {
+				case Intent.ACTION_POWER_CONNECTED: {
+					ImageView IV = findViewById(R.id.power_source_img);
+					IV.setImageDrawable(getDrawable(R.drawable.power_ac));
+					return;
+				}
+
+				case Intent.ACTION_POWER_DISCONNECTED: {
+					ImageView IV = findViewById(R.id.power_source_img);
+					IV.setImageDrawable(getDrawable(R.drawable.power_battery));
+					return;
+				}
+			}
+		}
+	};
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		IntentFilter IF = new IntentFilter();
+		IF.addAction(Intent.ACTION_POWER_CONNECTED);
+		IF.addAction(Intent.ACTION_POWER_DISCONNECTED);
+		registerReceiver(Receive, IF);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
