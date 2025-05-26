@@ -138,7 +138,7 @@ public class INDEX_EditActivity extends AppCompatActivity {
 		try {
 			//インデックスの中身を読み込んで変数に入れる
 			INDEX_APP_LIST = IndexManager.GetINDEX_CONTENTS(INDEX_ID, PKM, CONTEXT);
-			ALL_APP_LIST = AppGet.GET(PKM, CONTEXT);
+			ALL_APP_LIST = AppGet.AllGet(PKM, CONTEXT);
 
 			VIEW_RIFLESH();
 		} catch (Exception EX) {

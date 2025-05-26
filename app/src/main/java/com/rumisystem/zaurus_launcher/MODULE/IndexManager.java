@@ -7,7 +7,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rumisystem.zaurus_launcher.TYPE.AppData;
@@ -18,7 +17,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
@@ -130,7 +128,7 @@ public class IndexManager {
 	public static List<AppData> GetINDEX_CONTENTS(String ID, PackageManager PKM, Context CONTEXT) throws IOException, PackageManager.NameNotFoundException {
 		switch (ID) {
 			case "MORE": {
-				return AppGet.GET(PKM, CONTEXT);
+				return AppGet.AllGet(PKM, CONTEXT);
 			}
 
 			default: {
@@ -143,11 +141,7 @@ public class IndexManager {
 						List<AppData> CONTENTS = new ArrayList<>();
 						for (int I2 = 0;I2 < Row.get("CONTENTS").size(); I2++) {
 							String PKG_NAME = Row.get("CONTENTS").get(I2).asText();
-							PackageInfo PKG = PKM.getPackageInfo(PKG_NAME, 0);
-							ApplicationInfo APP = PKG.applicationInfo;
-							CONTENTS.add(new AppData(PKG_NAME, PKM.getApplicationLabel(APP).toString(), APP.targetSdkVersion, PKM.getApplicationIcon(APP)));
-
-							System.out.println("コンテンツ:" + APP.packageName);
+							CONTENTS.add(AppGet.Get(PKG_NAME, PKM, CONTEXT));
 						}
 						return CONTENTS;
 					}
