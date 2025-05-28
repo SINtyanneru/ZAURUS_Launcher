@@ -31,6 +31,9 @@
 		<activity android:name=".Activity.INDEX_EditActivity"
 				android:label="edit">
 		</activity>
+		<activity android:name=".Activity.IndexManager"
+				android:label="indexmanager">
+		</activity>
 		<activity android:name=".Activity.apk_admin"
 				android:label="apk_admin"
 				android:process=":new_process">

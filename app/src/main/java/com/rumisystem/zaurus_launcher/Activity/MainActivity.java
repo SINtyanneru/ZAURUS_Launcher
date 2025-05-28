@@ -149,6 +149,17 @@ public class MainActivity extends AppCompatActivity {
 					finish();
 				}
 			});
+			INDEX_EDIT_BTN.setOnLongClickListener(new View.OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View view) {
+					Intent INTENT = new Intent(CONTEXT, com.rumisystem.zaurus_launcher.Activity.IndexManager.class);
+					INTENT.putExtra("INDEX_ID", INDEX_ID);
+					startActivity(INTENT);
+					finish();
+
+					return true;
+				}
+			});
 
 			//リロードボタンクリック
 			Button ReloadButton = findViewById(R.id.reload_button);

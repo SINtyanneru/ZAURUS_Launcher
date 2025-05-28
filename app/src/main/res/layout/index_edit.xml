@@ -78,24 +78,33 @@
 					<LinearLayout
 							android:orientation="horizontal"
 							android:layout_width="match_parent"
-							android:layout_height="match_parent">
+							android:layout_height="match_parent"
+							android:gravity="right">
 						<!--移動系-->
 						<Button
+								android:id="@+id/icon_move_btn_up"
 								android:text="↑"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content" />
+								android:layout_width="50dp"
+								android:layout_height="50dp"
+								android:textSize="20dp"/>
 						<Button
+								android:id="@+id/icon_move_btn_down"
 								android:text="↓"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content" />
+								android:layout_width="50dp"
+								android:layout_height="50dp"
+								android:textSize="20dp"/>
 						<Button
+								android:id="@+id/icon_move_btn_left"
 								android:text="←"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content" />
+								android:layout_width="50dp"
+								android:layout_height="50dp"
+								android:textSize="20dp"/>
 						<Button
+								android:id="@+id/icon_move_btn_right"
 								android:text="→"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content" />
+								android:layout_width="50dp"
+								android:layout_height="50dp"
+								android:textSize="20dp"/>
 					</LinearLayout>
 				</FrameLayout>
 				<FrameLayout
