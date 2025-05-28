@@ -2,6 +2,8 @@ package com.rumisystem.zaurus_launcher.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.rumisystem.zaurus_launcher.MODULE.AppGet;
+import com.rumisystem.zaurus_launcher.MODULE.AppIconManager;
 import com.rumisystem.zaurus_launcher.R;
 import com.rumisystem.zaurus_launcher.TYPE.AppData;
 
@@ -50,15 +53,22 @@ public class apk_admin extends AppCompatActivity {
 			ALL_LIST_VIEW.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> ADAPTER_VIEW, View VIEW, int I, long L) {
-					//↓+1しないとズレますわよ
-					if (APP_LIST.get(I+1) != null) {
-						SELECT = I+1;
+					try {
+						//↓+1しないとズレますわよ
+						if (APP_LIST.get(I+1) != null) {
+							SELECT = I+1;
 
-						ImageView IV = findViewById(R.id.package_icon);
-						//IV.setImageDrawable(APP_LIST.get(I+1).GetIMAGE());
+							PackageManager PKM = CONTEXT.getPackageManager();
+							ApplicationInfo APP = PKM.getPackageInfo(APP_LIST.get(I+1).GetPACKAGE_NAME(), 0).applicationInfo;
 
-						TextView TV = findViewById(R.id.package_app_name);
-						TV.setText(APP_LIST.get(I+1).GetNAME());
+							ImageView IV = findViewById(R.id.package_icon);
+							IV.setImageBitmap(AppIconManager.Get(APP, PKM));
+
+							TextView TV = findViewById(R.id.package_app_name);
+							TV.setText(APP_LIST.get(I+1).GetNAME());
+						}
+					} catch (Exception EX) {
+						EX.printStackTrace();
 					}
 				}
 			});
