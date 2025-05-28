@@ -1,7 +1,11 @@
 package com.rumisystem.zaurus_launcher.MODULE;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +56,25 @@ public class AppGridAdapter extends BaseAdapter {
 			ImageView IMAGE_VIEW = VIEW.findViewById(R.id.imageView);
 
 			TEXTVIEW.setText(APP.GetNAME());
-			IMAGE_VIEW.setImageDrawable(APP.GetIMAGE());
+			IMAGE_VIEW.setImageDrawable(CONTEXT.getDrawable(R.drawable.apk_admin));
+
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Bitmap Icon = AppIconManager.Get(PKM.getPackageInfo(APP.GetPACKAGE_NAME(), 0).applicationInfo, PKM);
+
+						((Activity)CONTEXT).runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								IMAGE_VIEW.setImageBitmap(Icon);
+							}
+						});
+					} catch (Exception EX) {
+						EX.printStackTrace();
+					}
+				}
+			}).start();
 
 			return VIEW;
 		} catch (Exception EX) {

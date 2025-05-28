@@ -11,13 +11,11 @@ public class AppData {
 	private String PACKAGE_NAME;
 	private String NAME;
 	private int API_LEVEL;
-	private Drawable IMAGE;
 
-	public AppData(String PACKAGE_NAME, String NAME, int API_LEVEL, Drawable IMAGE) {
+	public AppData(String PACKAGE_NAME, String NAME, int API_LEVEL) {
 		this.PACKAGE_NAME = PACKAGE_NAME;
 		this.NAME = NAME;
 		this.API_LEVEL = API_LEVEL;
-		this.IMAGE = IMAGE;
 	}
 
 	public String GetPACKAGE_NAME() {
@@ -28,11 +26,6 @@ public class AppData {
 	public String GetNAME() {
 		//a
 		return NAME;
-	}
-
-	public Drawable GetIMAGE() {
-		//a
-		return IMAGE;
 	}
 
 	public boolean Run(Context CONTEXT, PackageManager PKM) {

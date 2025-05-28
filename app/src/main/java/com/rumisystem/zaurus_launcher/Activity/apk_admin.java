@@ -55,7 +55,7 @@ public class apk_admin extends AppCompatActivity {
 						SELECT = I+1;
 
 						ImageView IV = findViewById(R.id.package_icon);
-						IV.setImageDrawable(APP_LIST.get(I+1).GetIMAGE());
+						//IV.setImageDrawable(APP_LIST.get(I+1).GetIMAGE());
 
 						TextView TV = findViewById(R.id.package_app_name);
 						TV.setText(APP_LIST.get(I+1).GetNAME());

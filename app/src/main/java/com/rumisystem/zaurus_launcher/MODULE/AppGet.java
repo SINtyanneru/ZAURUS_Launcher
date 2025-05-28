@@ -22,8 +22,7 @@ public class AppGet {
 		APP_LIST.add(new AppData(
 			"rumi_zaurus.apk_admin",
 			"APK管理",
-			31,
-			CONTEXT.getDrawable(R.drawable.apk_admin)
+			31
 		));
 
 		System.out.println("アプリを全ロード中・・・");
@@ -42,10 +41,9 @@ public class AppGet {
 			//ランチャーから起動できるアクティビティがあるか
 			if (LANCH_INTENT != null) {
 				APP_LIST.add(new AppData(
-						APP.packageName,
-						PKM.getApplicationLabel(APP).toString(),
-						APP.targetSdkVersion,
-						AppIconManager.Get(APP, PKM)
+					APP.packageName,
+					PKM.getApplicationLabel(APP).toString(),
+					APP.targetSdkVersion
 				));
 			}
 		}
@@ -61,15 +59,14 @@ public class AppGet {
 				return new AppData(
 					"rumi_zaurus.apk_admin",
 					"APK管理",
-					31,
-					CONTEXT.getDrawable(R.drawable.apk_admin)
+					31
 				);
 			}
 
 			default: {
 				PackageInfo PKG = PKM.getPackageInfo(PackageName, 0);
 				ApplicationInfo APP = PKG.applicationInfo;
-				return new AppData(PackageName, PKM.getApplicationLabel(APP).toString(), APP.targetSdkVersion, PKM.getApplicationIcon(APP));
+				return new AppData(PackageName, PKM.getApplicationLabel(APP).toString(), APP.targetSdkVersion);
 			}
 		}
 	}
