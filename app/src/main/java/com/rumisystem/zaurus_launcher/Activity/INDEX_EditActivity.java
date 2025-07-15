@@ -251,6 +251,15 @@ public class INDEX_EditActivity extends AppCompatActivity {
 			INDEX_APP_LIST = IndexManager.GetINDEX_CONTENTS(INDEX_ID, PKM, CONTEXT);
 			ALL_APP_LIST = AppGet.AllGet(PKM, CONTEXT);
 
+			//インデックスに入ってるアプリは消す
+			for (int I = 0; I < ALL_APP_LIST.size(); I++) {
+				for (AppData A:INDEX_APP_LIST) {
+					if (A.GetPACKAGE_NAME().equals(ALL_APP_LIST.get(I).GetPACKAGE_NAME())) {
+						ALL_APP_LIST.remove(I);
+					}
+				}
+			}
+
 			GridView INDEX_GRID_VIEW = findViewById(R.id.INDEX_AppList);
 			INDEX_APP_ADAPTER = new AppGridAdapter(this, INDEX_APP_LIST, PKM);
 			INDEX_GRID_VIEW.setAdapter(INDEX_APP_ADAPTER);
