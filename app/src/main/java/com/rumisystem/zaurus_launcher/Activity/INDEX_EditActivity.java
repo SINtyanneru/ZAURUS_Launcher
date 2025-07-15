@@ -30,7 +30,10 @@ public class INDEX_EditActivity extends AppCompatActivity {
 	private Context CONTEXT;
 	private String INDEX_ID;
 	private List<AppData> INDEX_APP_LIST;
+	private AppGridAdapter INDEX_APP_ADAPTER;
 	private List<AppData> ALL_APP_LIST;
+	private AppGridAdapter ALL_APP_ADAPTER;
+
 	private PackageManager PKM;
 	private int INDEX_SELECT = 0;
 	private int ALL_SELECT = 0;
@@ -248,6 +251,14 @@ public class INDEX_EditActivity extends AppCompatActivity {
 			INDEX_APP_LIST = IndexManager.GetINDEX_CONTENTS(INDEX_ID, PKM, CONTEXT);
 			ALL_APP_LIST = AppGet.AllGet(PKM, CONTEXT);
 
+			GridView INDEX_GRID_VIEW = findViewById(R.id.INDEX_AppList);
+			INDEX_APP_ADAPTER = new AppGridAdapter(this, INDEX_APP_LIST, PKM);
+			INDEX_GRID_VIEW.setAdapter(INDEX_APP_ADAPTER);
+
+			GridView ALL_GRID_VIEW = findViewById(R.id.ALL_AppList);
+			ALL_APP_ADAPTER = new AppGridAdapter(this, ALL_APP_LIST, PKM);
+			ALL_GRID_VIEW.setAdapter(ALL_APP_ADAPTER);
+
 			VIEW_RIFLESH(false);
 		} catch (Exception EX) {
 			EX.printStackTrace();
@@ -256,13 +267,11 @@ public class INDEX_EditActivity extends AppCompatActivity {
 
 	private void VIEW_RIFLESH(boolean IndexOnly) {
 		//インデックスアプリ一覧を表示
-		GridView INDEX_GRID_VIEW = findViewById(R.id.INDEX_AppList);
-		INDEX_GRID_VIEW.setAdapter(new AppGridAdapter(this, INDEX_APP_LIST, PKM));
+		INDEX_APP_ADAPTER.notifyDataSetChanged();
 
 		if (!IndexOnly) {
 			//全アプリ一覧を表示
-			GridView ALL_GRID_VIEW = findViewById(R.id.ALL_AppList);
-			ALL_GRID_VIEW.setAdapter(new AppGridAdapter(this, ALL_APP_LIST, PKM));
+			ALL_APP_ADAPTER.notifyDataSetChanged();
 		}
 	}
 }
