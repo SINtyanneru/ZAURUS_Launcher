@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class INDEX_EditActivity extends AppCompatActivity {
 	private static final int ListViewCol = 3;
@@ -246,32 +247,42 @@ public class INDEX_EditActivity extends AppCompatActivity {
 	}
 
 	private void LOAD_INDEX() throws IOException {
-		try {
-			//インデックスの中身を読み込んで変数に入れる
-			INDEX_APP_LIST = IndexManager.GetINDEX_CONTENTS(INDEX_ID, PKM, CONTEXT);
-			ALL_APP_LIST = AppGet.AllGet(PKM, CONTEXT);
+		//インデックスの中身を読み込んで変数に入れる
+		IndexManager.GetINDEX_CONTENTS(INDEX_ID, PKM, CONTEXT, new Consumer<List<AppData>>() {
+			@Override
+			public void accept(List<AppData> app_data) {
+				try {
+					INDEX_APP_LIST = app_data;
+					ALL_APP_LIST = AppGet.AllGet(PKM, CONTEXT);
 
-			//インデックスに入ってるアプリは消す
-			for (int I = 0; I < ALL_APP_LIST.size(); I++) {
-				for (AppData A:INDEX_APP_LIST) {
-					if (A.GetPACKAGE_NAME().equals(ALL_APP_LIST.get(I).GetPACKAGE_NAME())) {
-						ALL_APP_LIST.remove(I);
+					//インデックスに入ってるアプリは消す
+					for (int I = 0; I < ALL_APP_LIST.size(); I++) {
+						for (AppData A:INDEX_APP_LIST) {
+							if (A.GetPACKAGE_NAME().equals(ALL_APP_LIST.get(I).GetPACKAGE_NAME())) {
+								ALL_APP_LIST.remove(I);
+							}
+						}
 					}
+
+					GridView INDEX_GRID_VIEW = findViewById(R.id.INDEX_AppList);
+					INDEX_APP_ADAPTER = new AppGridAdapter(CONTEXT, INDEX_APP_LIST, PKM);
+
+					GridView ALL_GRID_VIEW = findViewById(R.id.ALL_AppList);
+					ALL_APP_ADAPTER = new AppGridAdapter(CONTEXT, ALL_APP_LIST, PKM);
+
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							ALL_GRID_VIEW.setAdapter(ALL_APP_ADAPTER);
+							INDEX_GRID_VIEW.setAdapter(INDEX_APP_ADAPTER);
+							VIEW_RIFLESH(false);
+						}
+					});
+				} catch (Exception EX) {
+					EX.printStackTrace();
 				}
 			}
-
-			GridView INDEX_GRID_VIEW = findViewById(R.id.INDEX_AppList);
-			INDEX_APP_ADAPTER = new AppGridAdapter(this, INDEX_APP_LIST, PKM);
-			INDEX_GRID_VIEW.setAdapter(INDEX_APP_ADAPTER);
-
-			GridView ALL_GRID_VIEW = findViewById(R.id.ALL_AppList);
-			ALL_APP_ADAPTER = new AppGridAdapter(this, ALL_APP_LIST, PKM);
-			ALL_GRID_VIEW.setAdapter(ALL_APP_ADAPTER);
-
-			VIEW_RIFLESH(false);
-		} catch (Exception EX) {
-			EX.printStackTrace();
-		}
+		});
 	}
 
 	private void VIEW_RIFLESH(boolean IndexOnly) {

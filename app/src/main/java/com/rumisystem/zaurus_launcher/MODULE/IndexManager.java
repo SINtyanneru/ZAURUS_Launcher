@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
+import java.util.function.Consumer;
 
 public class IndexManager {
 	private static List<IndexData> IndexList = new ArrayList<>();
@@ -135,30 +137,47 @@ public class IndexManager {
 	 * @param ID
 	 * @return
 	 */
-	public static List<AppData> GetINDEX_CONTENTS(String ID, PackageManager PKM, Context CONTEXT) throws IOException, PackageManager.NameNotFoundException {
-		switch (ID) {
-			case "MORE": {
-				return AppGet.AllGet(PKM, CONTEXT);
-			}
+	public static void GetINDEX_CONTENTS(String ID, PackageManager PKM, Context CONTEXT, Consumer<List<AppData>> return_void) {
+		Loading.show(CONTEXT);
 
-			default: {
-				//取得
-				File IndexFile = new File(APP_DIR, "INDEX.json");		//←Initでファイル作ってるから消失しているわけがない
-				JsonNode LoadData = new ObjectMapper().readTree(IndexFile);
-				for (int I = 0; I < LoadData.size(); I++) {
-					JsonNode Row = LoadData.get(I);
-					if (Row.get("ID").asText().equals(ID)) {
-						List<AppData> CONTENTS = new ArrayList<>();
-						for (int I2 = 0;I2 < Row.get("CONTENTS").size(); I2++) {
-							String PKG_NAME = Row.get("CONTENTS").get(I2).asText();
-							CONTENTS.add(AppGet.Get(PKG_NAME, PKM, CONTEXT));
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				List<AppData> contents = null;
+
+				try {
+					switch (ID) {
+						case "MORE": {
+							contents =  AppGet.AllGet(PKM, CONTEXT);
 						}
-						return CONTENTS;
-					}
-				}
 
-				return null;
+						default: {
+							//取得
+							File IndexFile = new File(APP_DIR, "INDEX.json");		//←Initでファイル作ってるから消失しているわけがない
+							JsonNode LoadData = new ObjectMapper().readTree(IndexFile);
+							for (int I = 0; I < LoadData.size(); I++) {
+								JsonNode Row = LoadData.get(I);
+								if (Row.get("ID").asText().equals(ID)) {
+									List<AppData> CONTENTS = new ArrayList<>();
+									for (int I2 = 0;I2 < Row.get("CONTENTS").size(); I2++) {
+										String PKG_NAME = Row.get("CONTENTS").get(I2).asText();
+										CONTENTS.add(AppGet.Get(PKG_NAME, PKM, CONTEXT));
+									}
+									contents = CONTENTS;
+								}
+							}
+						}
+					}
+				} catch (PackageManager.NameNotFoundException e) {
+					throw new RuntimeException(e);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				} finally {
+					Loading.close();
+
+					return_void.accept(contents);
+				}
 			}
-		}
+		}).start();
 	}
 }

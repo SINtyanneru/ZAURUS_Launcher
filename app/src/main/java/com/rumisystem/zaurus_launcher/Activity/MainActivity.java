@@ -14,18 +14,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rumisystem.zaurus_launcher.MODULE.AppGridAdapter;
 import com.rumisystem.zaurus_launcher.MODULE.IndexManager;
+import com.rumisystem.zaurus_launcher.MODULE.Loading;
 import com.rumisystem.zaurus_launcher.TYPE.AppData;
 import com.rumisystem.zaurus_launcher.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MainActivity extends AppCompatActivity {
 	private Context CONTEXT;
@@ -192,11 +195,22 @@ public class MainActivity extends AppCompatActivity {
 			}
 
 			//インデックスの中身を読み込んで変数に入れる
-			APP_LIST = IndexManager.GetINDEX_CONTENTS(INDEX_ID, PKM, CONTEXT);
+			IndexManager.GetINDEX_CONTENTS(INDEX_ID, PKM, CONTEXT, new Consumer<List<AppData>>() {
+				@Override
+				public void accept(List<AppData> app_data) {
+					APP_LIST = app_data;
 
-			//アプリ一覧を表示
-			AppGridAdapter ADAPTER = new AppGridAdapter(this, APP_LIST, PKM);
-			GRID_VIEW.setAdapter(ADAPTER);
+					//アプリ一覧を表示
+					AppGridAdapter ADAPTER = new AppGridAdapter(CONTEXT, APP_LIST, PKM);
+
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							GRID_VIEW.setAdapter(ADAPTER);
+						}
+					});
+				}
+			});
 		} catch (Exception EX) {
 			EX.printStackTrace();
 		}
